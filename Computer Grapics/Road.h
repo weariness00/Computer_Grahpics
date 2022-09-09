@@ -3,6 +3,7 @@
 #include <random>
 #include <string>
 #include <conio.h>
+#include<iomanip>
 #define MaxLen 5
 
 using namespace std;
@@ -20,6 +21,7 @@ public:
 
 public:
 	int board[MaxLen][MaxLen];
+	int numberSize;
 };
 
 struct Position {

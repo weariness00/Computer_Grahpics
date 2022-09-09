@@ -14,21 +14,24 @@ void Road::Init()
 	for (int y = 0; y < MaxLen; y++)
 		for (int x = 0; x < MaxLen; x++)
 			board[y][x] = 0;
+
+	numberSize = 0;
 }
 
 void Road::PrintBoard()
 {
-	string numberLen = to_string(board[MaxLen - 1][MaxLen - 1]);
-	int size = numberLen.length();
+	int size = numberSize;
+	int i = 0;
+	while (size)
+	{
+		size = size / 10;
+		i++;
+	}
 	for (int y = 0; y < MaxLen; y++)
 	{
 		for (int x = 0; x < MaxLen; x++)
 		{
-			cout << board[y][x] << "\t";
-			for (int i = 0; i < size/5; i++)
-			{
-				cout << "\t";
-			}
+			cout << setw(i + 1) << board[y][x];
 		}
 		cout << endl;
 	}
@@ -40,12 +43,12 @@ void Road::SetRoad()
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dis(false, true);
 
-	int i = 1;
+	numberSize = 1;
 	Position maxMove;
 	Position pos;
 	maxMove.x = maxMove.y = 0;
 	pos.x = pos.y = 0;
-	board[pos.y][pos.x] = i++;
+	board[pos.y][pos.x] = numberSize++;
 
 	bool buf = false;
 	bool move;
@@ -120,7 +123,7 @@ void Road::SetRoad()
 			maxMove.x = 0;
 		}
 
-		board[pos.y][pos.x] = i++;
+		board[pos.y][pos.x] = numberSize++;
 
 		if (pos.x == MaxLen - 1 &&
 			pos.y == MaxLen - 1)

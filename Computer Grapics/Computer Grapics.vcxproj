@@ -129,16 +129,20 @@
   <ItemGroup>
     <ClCompile Include="ControlString.cpp" />
     <ClCompile Include="FindCard.cpp" />
+    <ClCompile Include="List.cpp" />
     <ClCompile Include="LoadFile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="RectangleCollider.cpp" />
     <ClCompile Include="Road.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ControlString.h" />
     <ClInclude Include="FindCard.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="LoadFile.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="RectangleCollider.h" />
     <ClInclude Include="Road.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

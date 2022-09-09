@@ -1,4 +1,4 @@
-#define MainNumber 7
+#define MainNumber 6
 
 #if MainNumber == 1
 #include "Matrix.h"
@@ -217,7 +217,7 @@ int main()
     {
         system("cls");
         PrintText(*text);
-        PrintMenu();
+        ControlStringMenu:PrintMenu();
         cmd = _getch();
 
         system("cls");
@@ -265,8 +265,127 @@ int main()
 }
 
 #elif MainNumber == 4
+#include"RectangleCollider.h"
+
+using namespace RC;
+
+#define MoveLenth 10
+
+int main()
+{
+    RectangleCollider rectangle[2];
+
+    bool A_B = false; // true A , false B
+    Position movePos;
+    char cmd;
+    while (true)
+    {
+        system("cls");
+        cout << "현재 Rect " << A_B + 1 << "가 움직일 차례" << endl;
+        cout << "방향키 입력시 " << MoveLenth << " 만큼 이동" << endl;
+        cout << "q : 프로그램 종료" << endl;
+        cout << "Rect 1 : ";
+        rectangle[0].PrintDot();
+        cout << endl;
+        cout << "Rect 2 : ";
+        rectangle[1].PrintDot();
+        cout << endl;
+
+        movePos = { 0,0 };
+        cmd = _getch();
+
+        if (cmd == -32)
+            cmd = _getch();
+
+        if (cmd == 'q' || cmd == 'Q')
+            break;
+        else if (cmd == 75) // <- Left
+        {
+            movePos = { -MoveLenth, 0 };
+        }
+        else if (cmd == 77) // -> Right
+        {
+            movePos = { MoveLenth, 0 };
+        }
+        else if (cmd == 72) // ^ Up
+        {
+            movePos = { 0, MoveLenth };
+        }
+        else if (cmd == 80) // V Down
+        {
+            movePos = { 0, -MoveLenth };
+        }
+        rectangle[A_B].Move(movePos);
+        rectangle[A_B].CheckCollider(rectangle[!A_B]);
+        A_B = !A_B;
+
+        cout << "아무키 입력시 계속 진행" << endl;
+        system("pause");
+    }
+}
 
 #elif MainNumber == 5
+#include"List.h"
+
+using namespace ListMenu;
+
+int main()
+{
+    List list;
+    NecessaryData data;
+    char cmd;
+
+    Init_List(list, data);
+
+    while (true)
+    {
+        system("cls");
+        PrintMenu();
+
+        cmd = _getch();
+
+        if (cmd == 'q' || cmd == 'Q') 
+            break;
+        else if (cmd == '+')
+        {
+            Push_Front(list,data);
+        }
+        else if (cmd == '-')
+        {
+            Pop_Front(list, data);
+        }
+        else if (cmd == 'e' || cmd == 'E')
+        {
+            Push_Back(list, data);
+        }
+        else if (cmd == 'd' || cmd == 'D')
+        {
+            Pop_Back(list, data);
+        }
+        else if (cmd == 'c' || cmd == 'C')
+        {
+            data.top = data.bottom = 0;
+        }
+        else if (cmd == 'm' || cmd == 'M')
+        {
+            FindFarDot(list, data);
+        }
+        else if (cmd == 'n' || cmd == 'N')
+        {
+            FindNearDot(list, data);
+        }
+        else if (cmd == 's' || cmd == 'S')
+        {
+            SortList(list, data);
+        }
+        else if (cmd == 'l' || cmd == 'L')
+        {
+            cout << "\n점의 개수 : " << data.top - data.bottom << endl;
+        }
+        system("pause");
+    }
+}
+
 #elif MainNumber == 6
 #include "Road.h"
 

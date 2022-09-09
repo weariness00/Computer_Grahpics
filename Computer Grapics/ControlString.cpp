@@ -187,15 +187,16 @@ void FIndSameWordFrontOfBack(list<string>& text)
     }
 }
 
-void PrintMenu()
+namespace ControlStringMenu
 {
-    cout << "\n\n메뉴 목록입니다." << endl;
-    cout << "d : 문장 전체를 뒤집기" << endl;
-    cout << "e : 동일한 간격에 특수문자 삽입" << endl;
-    cout << "f : 띄어쓰기를 기준으로 단어 뒤집기" << endl;
-    cout << "g : 특정 문자를 다른 문자로 바꾸기" << endl;
-    cout << "h : 앞뒤에서 읽었을 때 어디까지 같은 문자인지 출력하기" << endl;
-    cout << "q : 프로그램 종료" << endl;
+    void PrintMenu()
+    {
+        cout << "\n\n메뉴 목록입니다." << endl;
+        cout << "d : 문장 전체를 뒤집기" << endl;
+        cout << "e : 동일한 간격에 특수문자 삽입" << endl;
+        cout << "f : 띄어쓰기를 기준으로 단어 뒤집기" << endl;
+        cout << "g : 특정 문자를 다른 문자로 바꾸기" << endl;
+        cout << "h : 앞뒤에서 읽었을 때 어디까지 같은 문자인지 출력하기" << endl;
+        cout << "q : 프로그램 종료" << endl;
+    }
 }
-
-
