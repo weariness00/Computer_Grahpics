@@ -16,6 +16,7 @@ public:
 	void Init();
 	void PrintBoard();
 	void SetRoad();
+	void MoveBoard(bool dir);
 
 public:
 	int board[MaxLen][MaxLen];

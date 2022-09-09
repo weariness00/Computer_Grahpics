@@ -52,6 +52,7 @@ void Road::SetRoad()
 	while(true)
 	{		
 		system("cls");
+		cout << "a ¸¦ ´©¸¦¾¾ ½ºµh" << endl;
 		PrintBoard();
 		if (!buf)
 		{
@@ -124,5 +125,35 @@ void Road::SetRoad()
 		if (pos.x == MaxLen - 1 &&
 			pos.y == MaxLen - 1)
 			break;
+	}
+}
+
+void Road::MoveBoard(bool dir)
+{
+	int temp[MaxLen];
+	int tempPos;
+	if (dir) // left
+		tempPos = 0;
+	else //right
+		tempPos = MaxLen - 1;
+
+	for (int i = 0; i < MaxLen; i++)
+		temp[i] = board[i][tempPos];
+
+	if (dir) // left
+		tempPos = MaxLen - 1;
+	else //right
+		tempPos = 0;
+
+	for (int y = 0; y < MaxLen; y++)
+	{
+		for (int x = 0; x < MaxLen; x++)
+		{
+			if (dir && x + 1 < MaxLen)
+				board[y][x] = board[y][x + 1];
+			else if(!dir && MaxLen - 2 - x >= 0)
+				board[y][MaxLen - 1 - x] = board[y][MaxLen - 2 - x];
+		}
+		board[y][tempPos] = temp[y];
 	}
 }

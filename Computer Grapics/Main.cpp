@@ -1,4 +1,4 @@
-#define MainNumber 6
+#define MainNumber 7
 
 #if MainNumber == 1
 #include "Matrix.h"
@@ -275,16 +275,52 @@ int main()
     Road road;
     char cmd;
 
-    road.SetRoad();
-    system("cls");
-    road.PrintBoard();
     while (true)
     {
         system("cls");
+
+        road.PrintBoard();
+        cout << endl;
   
         cout << "r : 경로 재 설정" << endl;
+        cout << "방향키 : 보드판을 좌 우로 이동" << endl;
+        cout << "q : 프로그램 종료" << endl;
 
         cmd = _getch();
+
+        if (cmd == -32)
+            cmd = _getch();
+
+        system("cls");
+
+        if (cmd == 'q' || cmd == 'Q')
+            break;
+        else if (cmd == 'r' || cmd == 'R')
+        {
+            road.Init();
+            road.SetRoad();
+        }
+        else if (cmd == 75) // <-
+        {
+            road.MoveBoard(true);        
+        }
+        else if (cmd == 77) // ->
+        {
+            road.MoveBoard(false);
+        }
+
+        system("cls");
+        road.PrintBoard();
+
+        system("pause");
     }
+}
+#elif MainNumber == 7
+#include "FindCard.h"
+
+int main()
+{
+    FindCardGame game;
+    game.Update();
 }
 #endif // 0

@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ControlString.cpp" />
+    <ClCompile Include="FindCard.cpp" />
     <ClCompile Include="LoadFile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
@@ -135,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ControlString.h" />
+    <ClInclude Include="FindCard.h" />
     <ClInclude Include="LoadFile.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Road.h" />

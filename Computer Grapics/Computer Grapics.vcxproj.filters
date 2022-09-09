@@ -37,6 +37,24 @@
     <Filter Include="헤더 파일\03">
       <UniqueIdentifier>{361bf7c8-397b-4c65-9633-871932d8c948}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04">
+      <UniqueIdentifier>{19f875ac-12e6-4a03-8c8f-cd0be282d0a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\05">
+      <UniqueIdentifier>{6727feee-d8af-46cb-be1a-a2713770ef8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\04">
+      <UniqueIdentifier>{597d1900-c1d3-4628-a54a-4b658bc701b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\05">
+      <UniqueIdentifier>{3b494085-8f72-4ecf-bdda-275fb67a217f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\07">
+      <UniqueIdentifier>{32ffe4be-d02c-484f-9c07-7e33edb94a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\07">
+      <UniqueIdentifier>{755b52d9-c4d4-4452-be11-9b40c1247cb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Matrix.cpp">
@@ -54,6 +72,9 @@
     <ClCompile Include="ControlString.cpp">
       <Filter>소스 파일\03</Filter>
     </ClCompile>
+    <ClCompile Include="FindCard.cpp">
+      <Filter>소스 파일\07</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h">
@@ -67,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="ControlString.h">
       <Filter>헤더 파일\03</Filter>
+    </ClInclude>
+    <ClInclude Include="FindCard.h">
+      <Filter>헤더 파일\07</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
