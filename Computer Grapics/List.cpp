@@ -116,13 +116,12 @@ namespace ListMenu
 		}
 
 		data.onS = true;
-		for (int i = data.bottom; i <= data.top; i++)
-		{
-			list.x_clone[i] = list.x[i]; list.y_clone[i] = list.y[i]; list.z_clone[i] = list.z[i];
-			list.data_clone[i] = list.data[i];
+		for (int i = 0; i < data.top; i++) {
+			list.x_clone[i] = list.x[i + data.bottom]; list.y_clone[i] = list.y[i + data.bottom]; list.z_clone[i] = list.z[i + data.bottom];
+			list.data_clone[i] = list.data[i + data.bottom];
 		}
-		for (int i = data.bottom; i <= data.top; i++)
-		{
+
+		for (int i = data.bottom; i < data.top; i++) {
 			for (int j = 0; j < data.top - 1; j++) {
 				if (list.data_clone[j] > list.data_clone[j + 1]) {
 					temp = list.data_clone[j];

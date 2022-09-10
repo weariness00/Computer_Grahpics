@@ -4,7 +4,8 @@
 #include <string>
 #include <conio.h>
 #include<iomanip>
-#define MaxLen 5
+#include<Windows.h>
+#define MaxLen 30
 
 using namespace std;
 

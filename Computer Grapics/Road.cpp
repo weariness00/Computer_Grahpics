@@ -31,8 +31,15 @@ void Road::PrintBoard()
 	{
 		for (int x = 0; x < MaxLen; x++)
 		{
-			cout << setw(i + 1) << board[y][x];
+			cout << setw(i + 1);
+			if (board[y][x] == numberSize - 1)
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+			else
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+				
+			 cout << board[y][x];
 		}
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 		cout << endl;
 	}
 }
@@ -42,92 +49,99 @@ void Road::SetRoad()
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> dis(false, true);
+	std::uniform_int_distribution<int> MC(1, 8);
 
 	numberSize = 1;
 	Position maxMove;
-	Position pos;
-	maxMove.x = maxMove.y = 0;
-	pos.x = pos.y = 0;
-	board[pos.y][pos.x] = numberSize++;
+	Position increase_Pos;
+	Position value_Pos;
+	maxMove = value_Pos = increase_Pos = { 0,0 };
+	board[increase_Pos.y][increase_Pos.x] = numberSize++;
 
+	int moveCount = 0;
 	bool buf = false;
-	bool move;
 	while(true)
 	{		
-		system("cls");
-		cout << "a ¸¦ ´©¸¦¾¾ ½ºµh" << endl;
-		PrintBoard();
-		if (!buf)
+		moveCount = MC(gen);
+		increase_Pos = { 0,0 };
+
+		(dis(gen)) ? ((dis(gen) ? increase_Pos.x++ : increase_Pos.x--)) : ((dis(gen) ? increase_Pos.y++ : increase_Pos.y--));
+
+		if (abs(increase_Pos.x) == 1)
+			maxMove.x += moveCount * increase_Pos.x;
+		else if (abs(increase_Pos.y) == 1)
+			maxMove.y += moveCount * increase_Pos.y;
+
+		if (abs(maxMove.x) < 8 && abs(maxMove.y) < 8)
 		{
-			char buffer = _getch();
-			if (buffer == 'a')
-				buf = true;
-		}		
-
-		move = dis(gen);
-		if (abs(maxMove.x) == 8)
-			move = false;
-		else if (abs(maxMove.y) == 8)
-			move = true;
-
-		if (move)
-		{
-			move = dis(gen);
-			if (pos.x >= MaxLen - 1)
-				move = false;
-			else if (pos.x <= 0)
-				move = true;
-
-			if (move)
+			if (increase_Pos.x > 0)
 			{
-				pos.x++;
-
 				if (maxMove.x < 0)
 					maxMove.x = 0;
-				maxMove.x++;	
-			}
-			else 
-			{
-				pos.x--;
 
+				maxMove.x += moveCount * increase_Pos.x;
+				maxMove.y = 0;
+			}
+			else if (increase_Pos.x < 0)
+			{
 				if (maxMove.x > 0)
 					maxMove.x = 0;
-				maxMove.x--;		
+
+				maxMove.x += moveCount * increase_Pos.x;
+				maxMove.y = 0;
 			}
-			maxMove.y = 0;
-		}
-		else 
-		{
-			move = dis(gen);
-			if (pos.y >= MaxLen - 1)
-				move = false;
-			else if (pos.y <= 0)
-				move = true;
-
-			if (move)
+			else if (increase_Pos.y > 0)
 			{
-				pos.y++;
-
 				if (maxMove.y < 0)
 					maxMove.y = 0;
-				maxMove.y++;
-			}
-			else
-			{
-				pos.y--;
 
+				maxMove.y += moveCount * increase_Pos.y;
+				maxMove.x = 0;
+			}
+			else if (increase_Pos.y < 0)
+			{
 				if (maxMove.y > 0)
 					maxMove.y = 0;
-				maxMove.y--;		
+
+				maxMove.y += moveCount * increase_Pos.y;
+				maxMove.x = 0;
 			}
-			maxMove.x = 0;
 		}
+		else
+		{
+			if (abs(increase_Pos.x) == 1)
+				maxMove.x -= moveCount * increase_Pos.x;
+			else if (abs(increase_Pos.y) == 1)
+				maxMove.y -= moveCount * increase_Pos.y;
+			continue;
+		}
+			
 
-		board[pos.y][pos.x] = numberSize++;
+		for (int i = 0; i < moveCount; i++)
+		{
+			if ((value_Pos.x + increase_Pos.x < 0 || value_Pos.x + increase_Pos.x >= MaxLen) ||
+				(value_Pos.y + increase_Pos.y < 0 || value_Pos.y + increase_Pos.y >= MaxLen))
+				break;
+			
+			system("cls");
+			cout << moveCount << endl;
+			cout << "a ¸¦ ´©¸¦¾¾ ½ºµh" << endl;
+			PrintBoard();
+			if (!buf)
+			{
+				char buffer = _getch();
+				if (buffer == 'a')
+					buf = true;
+			}
 
-		if (pos.x == MaxLen - 1 &&
-			pos.y == MaxLen - 1)
-			break;
+			value_Pos.x += increase_Pos.x;
+			value_Pos.y += increase_Pos.y;
+			board[value_Pos.y][value_Pos.x] = numberSize++;
+
+			if (value_Pos.x == MaxLen - 1 &&
+				value_Pos.y == MaxLen - 1)
+				return;
+		}
 	}
 }
 

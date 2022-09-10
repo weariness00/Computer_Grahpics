@@ -1,4 +1,3 @@
-﻿  Main.cpp
-  Road.cpp
-  코드를 생성하고 있습니다...
-  Computer Grapics.vcxproj -> D:\GItData\Computer_Grahpics\Computer Grapics\x64\Debug\Computer Grapics.exe
+﻿  Road.cpp
+D:\GItData\DongWoo_Computer_Grahpics\Computer Grapics\Road.cpp(63,7): warning C4101: 'move' :참조되지 않은 지역 변수입니다.
+  Computer Grapics.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\Computer Grapics\x64\Debug\Computer Grapics.exe
