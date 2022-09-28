@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Afx.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="GL_Rectangle.cpp" />
     <ClCompile Include="main.cpp" />

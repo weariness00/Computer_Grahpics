@@ -13,6 +13,9 @@ public:
 	Vector2** GetRealMeshVertax() { return Real_MeshVertax; };
 
 public:
+	void SetAllAcetive(bool value);
+
+public:
 	int xDot;
 	int yDot;
 	bool** isAcitve;

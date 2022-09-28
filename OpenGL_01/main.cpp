@@ -175,12 +175,13 @@ void Motion(int x, int y);
 void FrameTimer(int value);
 void RandomSetha(int i);
 void RandomZigzag(int i);
+int SpawnRectangleObject();
 
 void main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 100);
+	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(windowSize_W, windowSize_H);
 	glutCreateWindow("Example");
 
@@ -208,18 +209,33 @@ GLvoid drawScene()
 	glClearColor(windowColor.R, windowColor.G, windowColor.B, windowColor.A);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	for (int i = 0; i < MaxSpawnCount; i++)
+	{
+		if (!rect_Obj[i].collider.isAllCollide)
+			continue;
+
+		rect_Obj[i].collider.CheckAllColider();
+	}
+
+
 	if (isRandomScale)
 	{
-		for (int i = 0; i < ObjectSpawnCount; i++)
+		for (int i = 0; i < MaxSpawnCount; i++)
 		{
+			if (!rect_Obj[i].collider.isAllCollide)
+				continue;
+
 			rect_Obj[i].transform.SetScale();
 		}
 	}
 
 	if (isRandomSetha)
 	{
-		for (int i = 0; i < ObjectSpawnCount; i++)
+		for (int i = 0; i < MaxSpawnCount; i++)
 		{
+			if (!rect_Obj[i].collider.isAllCollide)
+				continue;
+
 			if (rect_Obj[i].collider.WindowColider())
 			{
 				rect_Obj[i].transform.SetPosition(rect_Obj[i].transform.Pivot - sethaPos[i]);
@@ -233,8 +249,11 @@ GLvoid drawScene()
 	if (isRandomZigzag)
 	{
 		Vector2 pos = {0,0};
-		for (int i = 0; i < ObjectSpawnCount; i++)
-		{			
+		for (int i = 0; i < MaxSpawnCount; i++)
+		{
+			if (!rect_Obj[i].collider.isAllCollide)
+				continue;
+
 			if (moveZigzagXY[i])
 				pos = { zigzagSpeed[i].x, 0 };
 			else
@@ -260,8 +279,11 @@ GLvoid drawScene()
 
 	glutPostRedisplay();
 
-	for (int i = 0; i < ObjectSpawnCount; i++)
+	for (int i = 0; i < MaxSpawnCount; i++)
 	{
+		if (!rect_Obj[i].collider.isAllCollide)
+			continue;
+
 		rect_Obj[i].Update();
 	}
 	if (isErase)
@@ -277,10 +299,10 @@ GLvoid drawScene()
 
 GLvoid Reshape(int w, int h)
 {
+	glViewport(0, 0, w, h);
+
 	windowSize_W = w;
 	windowSize_H = h;
-
-	glViewport(0, 0, w, h);
 }
 
 void KeyBoard(unsigned char key, int x, int y)
@@ -318,11 +340,18 @@ void KeyBoard(unsigned char key, int x, int y)
 		}
 		break;
 	case 'r':
-		ObjectSpawnCount = 0;
+		for (int i = 0; i < MaxSpawnCount - 1; i++)
+		{
+			if (!rect_Obj[i].collider.isAllCollide)
+				continue;
+
+			rect_Obj[i].collider.isAllCollide = false;
+			rect_Obj[i].transform.SetAllAcetive(false);
+			rect_Obj[i].collider.SetAllColider(false);
+		}
 		break;
 	case 'z':
-		rect_Obj[ObjectSpawnCount].SetColor();
-		ObjectSpawnCount++;
+		SpawnRectangleObject();
 		break;
 	case 'q':
 		glutLeaveMainLoop();
@@ -342,16 +371,19 @@ void Mouse(int button, int state, int x, int y)
 		left_button = true;
 		int isAnythingCollide = true;
 
-		for (int i = ObjectSpawnCount - 1; i >= 0; i--)
+		for (int i = MaxSpawnCount - 1; i >= 0; i--)
 		{
+			if (!rect_Obj[i].collider.isAllCollide)
+				continue;
+
 			if (rect_Obj[i].collider.OnMouseCollide(startMouse_Pos))
 				return;
 		}
 
-		if (isAnythingCollide && ObjectSpawnCount <= 10)
+		if (isAnythingCollide && ObjectSpawnCount <= MaxSpawnCount)
 		{
-			rect_Obj[ObjectSpawnCount].transform.InitPivot(Coordinate(startMouse_Pos));
-			rect_Obj[ObjectSpawnCount].SetColor();
+			int num = SpawnRectangleObject();
+			rect_Obj[num].transform.InitPivot(Coordinate(startMouse_Pos));
 			ObjectSpawnCount++;
 		}
 	}
@@ -383,8 +415,11 @@ void Motion(int x, int y)
 		movePos.x = (x - startMouse_Pos.x);
 		movePos.y = (y - startMouse_Pos.y);
 
-		for (int i = ObjectSpawnCount - 1; i >= 0; i--)
+		for (int i = MaxSpawnCount - 1; i >= 0; i--)
 		{
+			if (!rect_Obj[i].collider.isAllCollide)
+				continue;
+
 			if (!rect_Obj[i].collider.isMouseCollide)
 				continue;
 
@@ -398,8 +433,11 @@ void Motion(int x, int y)
 		movePos = { (float)x, (float)y };
 		eraes_Obj.transform.SetPosition(Coordinate(movePos));
 
-		for (int i = ObjectSpawnCount - 1; i >= 0; i--)
+		for (int i = MaxSpawnCount - 1; i >= 0; i--)
 		{
+			if (!rect_Obj[i].collider.isAllCollide)
+				continue;
+
 			eraes_Obj.collider.OnCollider(rect_Obj[i].collider);
 		}
 	}
@@ -437,6 +475,22 @@ void RandomZigzag(int i)
 	zigzagSpeed[i] = { (float)randZigzag(gen) ,(float)randZigzag(gen) };
 	zigzagSpeed[i].x *= plus_minus(gen) == 0 ? -1 : 1;
 	zigzagSpeed[i].y *= plus_minus(gen) == 0 ? -1 : 1;
+}
+
+int SpawnRectangleObject()
+{
+	for (int i = 0; i < MaxSpawnCount; i++)
+	{
+		if (rect_Obj[i].collider.isAllCollide)
+			continue;
+
+		rect_Obj[i].collider.isAllCollide = true;
+		rect_Obj[i].transform.SetAllAcetive(true);
+		rect_Obj[i].collider.SetAllColider(true);
+		rect_Obj[i].SetColor();
+
+		return i;
+	}
 }
 
 #endif

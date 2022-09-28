@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <random>
 #include <list>
@@ -10,24 +11,22 @@
 
 using namespace std;
 
-#define MaxSpawnCount 10
+#define MaxSpawnCount 100
 
-static int windowSize_W = 1080;
-static int windowSize_H = 860;
+extern int windowSize_W;
+extern int windowSize_H;
 
-static bool isFullScreen = false;
-static bool isOnTimer = false;
-static bool isErase = false;
+extern bool isFullScreen;
+extern bool isOnTimer;
+extern bool isErase;
 
-static bool left_button = false;
-static bool right_button = false;
+extern bool left_button;
+extern bool right_button;
 
-static int ObjectSpawnCount = 0;
+extern int ObjectSpawnCount;
 
-static time_t Start_Time;
-static int Time_Duration;
-
-#pragma region  Defualt Function
+extern time_t Start_Time;
+extern int Time_Duration;
 
 typedef struct Vector2 {
 	GLfloat x;
@@ -46,67 +45,13 @@ typedef struct Color {
 	GLclampf A;
 }Color;
 
-static Vector2 RealPosition(Vector2 pos)
-{
-	Vector2 real_pos;
+Vector2 RealPosition(Vector2 pos);
+Vector2 Coordinate(Vector2 pos);
+Vector2 operator+ (const Vector2 my, const Vector2 other);
+Vector2 operator- (const Vector2 my, const Vector2 other);
+Vector2 operator* (const Vector2 my, const Vector2 other);
+ostream& operator<< (ostream& outputStream, const Vector2& my);
+Position2 operator+(const Position2 my, const Position2 other);
 
-	real_pos.x = pos.x / windowSize_W * 2;
-	real_pos.y = pos.y / windowSize_H * 2;
-
-	return real_pos;
-}
-
-static Vector2 Coordinate(Vector2 pos)
-{
-	pos.x -= windowSize_W/2;
-	pos.y -= windowSize_H/2;
-
-	return pos;
-}
-
-static Vector2 operator+ (const Vector2 my, const Vector2 other)
-{
-	Vector2 result;
-	result.x = my.x + other.x;
-	result.y = my.y + other.y;
-
-	return result;
-}
-
-static Vector2 operator- (const Vector2 my, const Vector2 other)
-{
-	Vector2 result;
-	result.x = my.x - other.x;
-	result.y = my.y - other.y;
-
-	return result;
-}
-
-static Vector2 operator* (const Vector2 my, const Vector2 other)
-{
-	Vector2 result;
-	result.x = my.x * other.x;
-	result.y = my.y * other.y;
-
-	return result;
-}
-
-static ostream& operator<< (ostream& outputStream, const Vector2& my)
-{
-	cout << my.x << ", " << my.y;
-	return outputStream;
-}
-
-static Position2 operator+(const Position2 my, const Position2 other)
-{
-	Position2 result;
-	result.x = my.x + other.x;
-	result.y = my.y + other.y;
-
-	return result;
-}
-#pragma endregion
-
-static Vector2 window_RealPos = RealPosition({ 1, 1 });
-
-static Color windowColor = { 0,0,0,1 };
+extern Vector2 window_RealPos;
+extern Color windowColor;

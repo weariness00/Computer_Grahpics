@@ -10,8 +10,12 @@ public:
 public:
 	void InitCollider(Vector2 collider[]);
 	void InitTransform(Transform& t);
+
+public:
 	bool OnMouseCollide(Vector2 mousePos);
 	bool WindowColider();
+	void SetAllColider(bool value);	// 수정(보완) 필요
+	void CheckAllColider();
 	bool OnCollider(const Collider& other); //지우개 전용
 
 private:
