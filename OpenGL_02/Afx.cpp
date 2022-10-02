@@ -1,5 +1,8 @@
 #include "Afx.h"
 
+//GLuint s_program;
+//GLuint VAO, VBO_Dot, VBO_Color;
+
 int windowSize_W = 1080;
 int windowSize_H = 860;
 
@@ -10,10 +13,12 @@ bool isErase = false;
 bool left_button = false;
 bool right_button = false;
 
-int ObjectSpawnCount = 0;
+int ObjectSpawnCount = 4;
 
 time_t Start_Time;
 int Time_Duration;
+
+float PI = 3.14159265;
 
 Vector2 RealPosition(Vector2 pos)
 {
@@ -27,10 +32,11 @@ Vector2 RealPosition(Vector2 pos)
 
 Vector2 Coordinate(Vector2 pos)
 {
-	pos.x -= windowSize_W / 2;
-	pos.y -= windowSize_H / 2;
+	Vector2 result;
+	result.x = pos.x - windowSize_W / 2;
+	result.y = pos.y - windowSize_H / 2;
 
-	return pos;
+	return result;
 }
 
 Vector2 operator+ (const Vector2 my, const Vector2 other)
@@ -60,6 +66,15 @@ Vector2 operator* (const Vector2 my, const Vector2 other)
 	return result;
 }
 
+Vector2 operator+ (const float other, const Vector2 my)
+{
+	Vector2 result;
+	result.x = my.x + other;
+	result.y = my.y + other;
+
+	return result;
+}
+
 ostream& operator<< (ostream& outputStream, const Vector2& my)
 {
 	cout << my.x << ", " << my.y;
@@ -77,6 +92,7 @@ Position2 operator+(const Position2 my, const Position2 other)
 
 Vector2 window_RealPos = RealPosition({ 1, 1 });
 Color windowColor = { 0,0,0,1 };
+Vector2 StartMouse = { 0,0 };
 
 char* filetobuf(const char* file)
 {
@@ -94,4 +110,4 @@ char* filetobuf(const char* file)
 	fclose(fptr); // Close the file
 	buf[length] = 0; // Null terminator
 	return buf; // Return the buffer
-}
+}

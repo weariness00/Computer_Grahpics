@@ -4,7 +4,9 @@ Object::Object()
 {
 	name = "UnName";
 	color = { 1,1,1,1 };
-	//collider.InitTransform(transform);
+	collider.InitTransform(transform);
+
+	isActive = false;
 }
 
 Object::~Object()

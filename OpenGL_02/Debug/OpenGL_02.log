@@ -1,7 +1,2 @@
-﻿  GL_Triangle.cpp
-  main.cpp
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\main.cpp(32,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
-  코드를 생성하고 있습니다...
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\GL_Triangle.cpp(40): warning C4172: 지역 변수 또는 임시: c의 주소를 반환하고 있습니다.
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\GL_Triangle.cpp(29): warning C4172: 지역 변수 또는 임시: real_Dot의 주소를 반환하고 있습니다.
+﻿  GL_Whirlwind.cpp
   OpenGL_02.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\Debug\OpenGL_02.exe

@@ -19,7 +19,7 @@ Transform::~Transform()
 
 void Transform::Update()
 {
-	//SetVertax();
+
 }
 
 void Transform::SetScale()
@@ -38,13 +38,17 @@ void Transform::SetScale()
 	Scale = randomSacle;
 }
 
-//void Transform::SetVertax()
-//{
-//	for (int y = 0; y < yDot; y++)
-//	{
-//		for (int x = 0; x < xDot; x++)
-//		{
-//			Real_MeshVertax[y][x] = RealPosition(meshVertax[y][x] * Scale + Pivot);
-//		}
-//	}
-//}
+void Transform::SetRandomRotate()
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<int> randomPos(0, 360);
+
+	Rotation = { (float)randomPos(gen), 0 };
+}
+
+void Transform::LookAt(float speed)
+{
+	Position.x += speed * float(cos((Rotation.x + 90) * (PI / 180)));
+	Position.y += speed * float(sin((Rotation.x + 90) * (PI / 180)));
+}

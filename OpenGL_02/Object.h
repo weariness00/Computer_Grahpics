@@ -17,6 +17,8 @@ public:
 public:
 	string name;
 	Transform transform;
-	//Collider collider;
+	Collider collider;
 	Color color;
+
+	bool isActive;
 };

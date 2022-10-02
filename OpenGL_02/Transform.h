@@ -10,10 +10,9 @@ public:
 
 public:
 	void Update();
-	void SetScale();
-
-private:
-	void SetVertax();
+	void SetScale(); // 랜덤 스케일
+	void SetRandomRotate();
+	void LookAt(float speed);	// 바라보는 방향에서 pos 만큼 이동
 
 public:
 	Vector2 Position;
