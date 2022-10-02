@@ -10,9 +10,15 @@ public:
 public:
 	Vector2* GetDot();
 	int GetPointCount() { return pointCount; };
+	void RandomWhirwindDir();
 
 private:
 	void InitPoint();
+
+public:
+	bool OnDrawAnimaiton;
+
+	int DrawAniCount;
 
 private:
 	Vector2* Real_Point;
@@ -21,5 +27,7 @@ private:
 
 	float Radius;
 	int speed;
+
+	int UpDown = 1;
 };
 

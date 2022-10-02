@@ -66,7 +66,6 @@ Vector2 Coordinate(Vector2 pos);
 Vector2 operator+ (const Vector2 my, const Vector2 other);
 Vector2 operator- (const Vector2 my, const Vector2 other);
 Vector2 operator* (const Vector2 my, const Vector2 other);
-Vector2 operator+ (const float other, const Vector2 my);
 ostream& operator<< (ostream& outputStream, const Vector2& my);
 Position2 operator+(const Position2 my, const Position2 other);
 

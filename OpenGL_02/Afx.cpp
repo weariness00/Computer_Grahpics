@@ -66,15 +66,6 @@ Vector2 operator* (const Vector2 my, const Vector2 other)
 	return result;
 }
 
-Vector2 operator+ (const float other, const Vector2 my)
-{
-	Vector2 result;
-	result.x = my.x + other;
-	result.y = my.y + other;
-
-	return result;
-}
-
 ostream& operator<< (ostream& outputStream, const Vector2& my)
 {
 	cout << my.x << ", " << my.y;

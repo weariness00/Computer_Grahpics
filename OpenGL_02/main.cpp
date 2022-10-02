@@ -18,6 +18,7 @@ GLvoid Reshape(int w, int h);
 GLvoid UpdateBuffer();
 void InitShader();
 void InitTriangle();
+void SetRandomWindowColor();
 
 void Move();
 
@@ -137,9 +138,15 @@ void KeyBoard(unsigned char key, int x, int y)
 		break;
 	case 'x':
 		wObj.isActive = !wObj.isActive;
+		if (!wObj.isActive)
+			windowColor = { 0,0,0,1 };
 		break;
 	case 'q':
 		glutLeaveMainLoop();
+		break;
+	case 'n':
+		wObj.OnDrawAnimaiton = !wObj.OnDrawAnimaiton;
+		break;
 		break;
 	default:
 		break;
@@ -153,27 +160,37 @@ void Mouse(int button, int state, int x, int y)
 	StartMouse = { (float)x,(float)y };
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		left_button = true;
-		Vector2 up_down = { 0.2,0.2 };
-
-		if (isSizeUp)
-			scale = scale + up_down;
-		else
-			scale = scale - up_down;
 		StartMouse = Coordinate(StartMouse);
 		StartMouse.y = -StartMouse.y;
+		left_button = true;
+		if (wObj.isActive)
+		{
+			wObj.RandomWhirwindDir();
+			wObj.transform.Position = StartMouse;
+			SetRandomWindowColor();
+		}
 
-		obj[nowObjCount].transform.Position = StartMouse;
-		obj[nowObjCount].SetColor();
-		obj[nowObjCount].transform.Scale = scale;
-		obj[nowObjCount].transform.Rotation = { 0,0 };
+		if (obj[nowObjCount].isActive)
+		{
+			Vector2 up_down = { 0.2,0.2 };
 
-		if (obj[nowObjCount].transform.Scale.x >= 2)
-			isSizeUp = false;
-		else if(obj[nowObjCount].transform.Scale.x <= 1)
-			isSizeUp = true;
+			if (isSizeUp)
+				scale = scale + up_down;
+			else
+				scale = scale - up_down;
+			
+			obj[nowObjCount].transform.Position = StartMouse;
+			obj[nowObjCount].SetColor();
+			obj[nowObjCount].transform.Scale = scale;
+			obj[nowObjCount].transform.Rotation = { 0,0 };
 
-		nowObjCount = (nowObjCount + 1) % 4;
+			if (obj[nowObjCount].transform.Scale.x >= 2)
+				isSizeUp = false;
+			else if (obj[nowObjCount].transform.Scale.x <= 1)
+				isSizeUp = true;
+
+			nowObjCount = (nowObjCount + 1) % 4;
+		}
 	}
 	else if (button == GLUT_LEFT_BUTTON && state == GLUT_UP)
 		left_button = false;
@@ -231,7 +248,7 @@ void make_vertexShaders()
 GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 {
 	//--- 변경된 배경색 설정
-	glClearColor(0, 0, 0, 1.0f);
+	glClearColor(windowColor.R, windowColor.G, windowColor.B, windowColor.A);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	Move();
@@ -246,7 +263,15 @@ GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
 		glUniform4f(vColorLocation, 1, 1, 1, 1);
 		glBindVertexArray(WVAO);
 		glPointSize(5.0f);
-		glDrawArrays(GL_POINTS, 0, wObj.GetPointCount());
+		if (wObj.OnDrawAnimaiton)
+		{
+			glDrawArrays(GL_POINTS, 0, wObj.DrawAniCount);
+			wObj.DrawAniCount = (wObj.DrawAniCount + 1) % 200;
+		}
+		else
+		{
+			glDrawArrays(GL_POINTS, 0, wObj.GetPointCount());
+		}
 		glBindVertexArray(0);
 		glEnableVertexAttribArray(0);
 	}
@@ -379,115 +404,76 @@ void InitTriangle()
 	}
 }
 
+void SetRandomWindowColor()
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<GLclampf> radnomColor(0.0f, 1.0f);
+
+	windowColor = { radnomColor(gen),radnomColor(gen) ,radnomColor(gen), 1.0f };
+}
+
 void Move()
 {
-	for (int i = 0; i < SapwnCount/2; i++)
+	if (wObj.isActive)
 	{
-		if (!isOtehrWindow)
-			continue;
-
-		obj[i].MoveZigZag();
-
-		for (int j = 0; j < 4; j++)
-		{
-			if (!otherWindowActive)
-				break;
-
-			obj[i].collider.OnCollide(otherWindow[j]);
-
-			if (obj[i].collider.isCollide)
-				break;
-		}
-
-		if (obj[i].collider.isCollide)
-		{
-			obj[i].transform.LookAt(-15.0f);
-			obj[i].SetRandomZigZagRadius();
-		}
-	}
-	for (int i = SapwnCount / 2; i < SapwnCount; i++)
-	{
-		if (!isMove)
-			continue;
-
-		for (int j = 0; j < 4; j++)
-		{
-			if (!otherWindowActive)
-				break;
-
-			obj[i].collider.OnCollide(otherWindow[j]);
-
-			if (obj[i].collider.isCollide)
-				break;
-		}
-
-		if (obj[i].collider.isCollide)
-		{
-			obj[i].transform.LookAt(-30.0f);
-			obj[i].SetRandomSpeed();
-			obj[i].transform.SetRandomRotate();
-			obj[i].GetDot();
-		}
-
-		obj[i].MoveWindow();
+		wObj.transform.Rotation.x = ((int)wObj.transform.Rotation.x + 1) % 360 ;
 	}
 
-//	for (int i = 0; i < SapwnCount; i++)
-//	{
-//		dot = obj[i].GetDot();
-//
-//		if (dot[0].x <= 0.5f && dot[0].x >= -0.5f &&
-//			//dot[1].x <= 0.5f && dot[1].x >= -0.5f &&
-//			//dot[2].x <= 0.5f && dot[2].x >= -0.5f &&
-//			dot[0].y <= 0.5f && dot[0].y >= -0.5f
-///*			dot[1].y <= 0.5f && dot[1].y >= -0.5f &&
-//			dot[2].y <= 0.5f && dot[2].y >= -0.5f*/)
-//		{
-//			if (!isOtehrWindow)
-//				continue;
-//
-//			obj[i].MoveZigZag();
-//
-//			for (int j = 0; j < 4; j++)
-//			{
-//				obj[i].collider.OnCollide(otherWindow[j]);
-//
-//				if (obj[i].collider.isCollide)
-//					break;
-//			}
-//
-//			if (obj[i].collider.isCollide)
-//			{
-//				obj[i].transform.LookAt(-15.0f);
-//				obj[i].SetRandomZigZagRadius();
-//				dot = obj[i].GetDot();
-//
-//				for (int i = 0; i < 3; i++)
-//				{
-//					cout << dot[i] << endl;
-//				}
-//				cout << "on : " << i << endl;
-//			}
-//		}
-//		else
-//		{
-//			if (!isMove)
-//				continue;
-//
-//			for (int j = 0; j < 4; j++)
-//				obj[i].collider.OnCollide(otherWindow[j]);
-//
-//			if (obj[i].collider.isCollide)
-//			{
-//				obj[i].transform.LookAt(-30.0f);
-//				obj[i].SetRandomSpeed();
-//				obj[i].transform.SetRandomRotate();
-//				obj[i].GetDot();
-//			}
-//
-//			obj[i].MoveWindow();
-//		}
-//	}
+	for (int i = 0; i < SapwnCount; i++)
+	{
+		if (obj[i].transform.Position.x >= -windowSize_W/4 && obj[i].transform.Position.x <= windowSize_W / 4 &&
+			obj[i].transform.Position.y >= -windowSize_H / 4 && obj[i].transform.Position.y <= windowSize_H / 4)
+		{
+			if (!isOtehrWindow)
+				continue;
+
+			obj[i].MoveZigZag();
+
+			for (int j = 0; j < 4; j++)
+			{
+				if (!otherWindowActive)
+					break;
+
+				obj[i].collider.OnCollide(otherWindow[j]);
+
+				if (obj[i].collider.isCollide)
+					break;
+			}
+
+			if (obj[i].collider.isCollide)
+			{
+				obj[i].transform.LookAt(-15.0f);
+				obj[i].SetRandomZigZagRadius();
+			}
+		}
+		else
+		{
+			if (!isMove)
+				continue;
+
+			for (int j = 0; j < 4; j++)
+			{
+				if (!otherWindowActive)
+					break;
+
+				obj[i].collider.OnCollide(otherWindow[j]);
+
+				if (obj[i].collider.isCollide)
+					break;
+			}
+
+			if (obj[i].collider.isCollide)
+			{
+				obj[i].transform.LookAt(-30.0f);
+				obj[i].SetRandomSpeed();
+				obj[i].transform.SetRandomRotate();
+				obj[i].GetDot();
+			}
+
+			obj[i].MoveWindow();
+		}
+	}
 }
 
 void make_fragmentShaders()
