@@ -1,6 +1,6 @@
 #include "Afx.h"
 
-//GLuint s_program;
+GLuint s_program;
 //GLuint VAO, VBO_Dot, VBO_Color;
 
 int windowSize_W = 1080;
@@ -48,6 +48,15 @@ Vector2 operator+ (const Vector2 my, const Vector2 other)
 	return result;
 }
 
+Vector2 operator+ (const Vector2 my, const int other)
+{
+	Vector2 result;
+	result.x = my.x + other;
+	result.y = my.y + other;
+
+	return result;
+}
+
 Vector2 operator- (const Vector2 my, const Vector2 other)
 {
 	Vector2 result;
@@ -57,11 +66,47 @@ Vector2 operator- (const Vector2 my, const Vector2 other)
 	return result;
 }
 
+Vector2 operator- (const Vector2 my, const int other)
+{
+	Vector2 result;
+	result.x = my.x - other;
+	result.y = my.y - other;
+
+	return result;
+}
+
 Vector2 operator* (const Vector2 my, const Vector2 other)
 {
 	Vector2 result;
 	result.x = my.x * other.x;
 	result.y = my.y * other.y;
+
+	return result;
+}
+
+Vector2 operator* (const Vector2 my, const int other)
+{
+	Vector2 result;
+	result.x = my.x * other;
+	result.y = my.y * other;
+
+	return result;
+}
+
+Vector2 operator/ (const Vector2 my, const Vector2 other)
+{
+	Vector2 result;
+	result.x = my.x / other.x;
+	result.y = my.y / other.y;
+
+	return result;
+}
+
+Vector2 operator/ (const Vector2 my, const int other)
+{
+	Vector2 result;
+	result.x = my.x / other;
+	result.y = my.y / other;
 
 	return result;
 }

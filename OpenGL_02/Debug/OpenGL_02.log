@@ -1,3 +1,5 @@
-﻿  GL_Whirlwind.cpp
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\GL_Whirlwind.cpp(37,14): warning C4244: '초기화 중': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  GL_Window.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\GL_Window.cpp(118,17): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\GL_Window.cpp(136,43): warning C4244: '=': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\GL_Window.cpp(137,43): warning C4244: '=': 'double'에서 'GLfloat'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   OpenGL_02.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\OpenGL_02\Debug\OpenGL_02.exe

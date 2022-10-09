@@ -18,7 +18,7 @@ using namespace std;
 
 #define SapwnCount 4
 
-//extern GLuint s_program;
+extern GLuint s_program;
 //extern GLuint VAO, VBO_Dot, VBO_Color;
 
 extern int windowSize_W;
@@ -64,8 +64,13 @@ typedef struct Color {
 Vector2 RealPosition(Vector2 pos);
 Vector2 Coordinate(Vector2 pos);
 Vector2 operator+ (const Vector2 my, const Vector2 other);
+Vector2 operator+ (const Vector2 my, const int other);
 Vector2 operator- (const Vector2 my, const Vector2 other);
+Vector2 operator- (const Vector2 my, const int other);
 Vector2 operator* (const Vector2 my, const Vector2 other);
+Vector2 operator* (const Vector2 my, const int other);
+Vector2 operator/ (const Vector2 my, const Vector2 other);
+Vector2 operator/ (const Vector2 my, const int other);
 ostream& operator<< (ostream& outputStream, const Vector2& my);
 Position2 operator+(const Position2 my, const Position2 other);
 
@@ -74,5 +79,3 @@ extern Color windowColor;
 extern Vector2 StartMouse;
 
 char* filetobuf(const char* file);
-//GLuint make_vertexShaders();
-//GLuint make_fragmentShaders();

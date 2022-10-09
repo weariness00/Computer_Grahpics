@@ -18,14 +18,17 @@ void Collider::InitTransform(Transform& t)
 
 bool Collider::OnMouseCollide(Vector2 mousePos)
 {
-	Vector2 real_pos = Coordinate(mousePos);
+	Vector2 this_Box[2];
 
 	isMouseCollide = false;
 
-	if (real_pos.x >= Collider_Box[0].x * transform->Scale.x + transform->Pivot.x &&
-		real_pos.x <= Collider_Box[1].x * transform->Scale.x + transform->Pivot.x &&
-		real_pos.y >= Collider_Box[0].y * transform->Scale.y + transform->Pivot.y &&
-		real_pos.y <= Collider_Box[1].y * transform->Scale.y + transform->Pivot.y)
+	for (int i = 0; i < 2; i++)
+		this_Box[i] = Collider_Box[i] * transform->Scale + transform->Position;
+
+	if (mousePos.x >= this_Box[0].x &&
+		mousePos.x <= this_Box[1].x &&
+		mousePos.y <= this_Box[0].y &&
+		mousePos.y >= this_Box[1].y)
 	{
 		isMouseCollide = true;
 		return isMouseCollide;
@@ -107,21 +110,30 @@ bool Collider::OnCollide(Collider other)
 			isCollide = true;
 		}
 	}
-
-	//if ((this_Box[0].x >= other_Box[0].x && this_Box[1].x <= other_Box[0].x &&
-	//	this_Box[0].x >= other_Box[1].x && this_Box[1].x <= other_Box[1].x) ||
-	//	(this_Box[0].y >= other_Box[0].y && this_Box[1].y <= other_Box[0].y &&
-	//	this_Box[0].y >= other_Box[1].y && this_Box[1].y <= other_Box[1].y))
-	//{
-	//	isCollide = true;
-	//}
 	return isCollide;
 }
 
 void Collider::SetCollider(Vector2 dot[2])
 {
+	Vector2 d[2];
+	d[0] = dot[0];
+	d[1] = dot[0];
+	for (int i = 1; i < 2; i++)
+	{
+		if (d[0].x > dot[i].x)
+			d[0].x = dot[i].x;
+		if (d[0].y < dot[i].y)
+			d[0].y = dot[i].y;
+
+		if (d[1].x < dot[i].x)
+			d[1].x = dot[i].x;
+		if (d[1].y > dot[i].y)
+			d[1].y = dot[i].y;
+	}
+
 	for (int i = 0; i < 2; i++)
 	{
-		Collider_Box[i] = dot[i];
+		Collider_Box[i] = d[i];
 	}
+
 }

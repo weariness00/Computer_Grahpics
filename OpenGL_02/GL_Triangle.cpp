@@ -2,7 +2,7 @@
 
 GL_Triangle::GL_Triangle() : Object()
 {
-	radius = 30;
+	radius = 10;
 	speed = 1;
 	transform.Pivot = { 0,0 };
 	transform.Scale = { 1,1 };
@@ -33,22 +33,7 @@ Vector2* GL_Triangle::GetDot()
 	Dot[0] = { float(3*radius * cos((0 + 90 + transform.Rotation.x) * (PI / 180))), float(3 *radius * sin((0 + 90 + transform.Rotation.x) * (PI / 180))) };
 	Dot[1] = { float(radius * cos((120 + 90 + transform.Rotation.x) * (PI / 180))), float(radius * sin((120 + 90+ transform.Rotation.x) * (PI / 180))) };
 	Dot[2] = { float(radius * cos((-120 + 90 + transform.Rotation.x) * (PI / 180))), float(radius * sin((-120 + 90 + transform.Rotation.x) * (PI / 180))) };
-	Vector2 d[2];
-	d[0] = Dot[0];
-	d[1] = Dot[0];
-	for (int i = 1; i < 3; i++)
-	{
-		if (d[0].x > Dot[i].x)
-			d[0].x = Dot[i].x;
-		if (d[0].y < Dot[i].y)
-			d[0].y = Dot[i].y;
-
-		if (d[1].x < Dot[i].x)
-			d[1].x = Dot[i].x;
-		if (d[1].y > Dot[i].y)
-			d[1].y = Dot[i].y;
-	}
-	collider.SetCollider(d);
+	collider.SetCollider(Dot);
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -87,7 +72,7 @@ void GL_Triangle::SetRandomSpeed()
 {
 	random_device rd;
 	mt19937 gen(rd());
-	uniform_int_distribution<int> radnomSpeed(10, 15);
+	uniform_int_distribution<int> radnomSpeed(2, 4);
 
 	speed = radnomSpeed(gen);
 }
@@ -97,7 +82,7 @@ void GL_Triangle::SetRandomZigZagRadius()
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<int> radnomRadius(0, 360);
-	uniform_int_distribution<int> radnomSpeed(10, 15);
+	uniform_int_distribution<int> radnomSpeed(2, 4);
 
 	zigzag_Radius = (float)radnomRadius(gen);
 	zigzag_Count = 0;
@@ -107,17 +92,9 @@ void GL_Triangle::SetRandomZigZagRadius()
 
 void GL_Triangle::MoveZigZag()
 {
-	//if (collider.isCollide)
-	//{
-	//	transform.LookAt((float)zigzag_Speed);
-	//	SetRandomZigZagRadius();
-	//	GetDot();
-	//	return;
-	//}
-
 	transform.Rotation = { zigzag_Radius,0 };
 
-	if (zigzag_Count == 10)
+	if (zigzag_Count == 30)
 	{
 		int increase_decrease;
 		if (isZigZagCountMax)

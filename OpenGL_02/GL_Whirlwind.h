@@ -17,6 +17,7 @@ private:
 
 public:
 	bool OnDrawAnimaiton;
+	bool OnMoveAnimaiton;
 
 	int DrawAniCount;
 

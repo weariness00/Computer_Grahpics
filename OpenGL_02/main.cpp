@@ -1,32 +1,35 @@
-#include "GL_Triangle.h"
-#include "GL_Whirlwind.h"
+#define MainNumber 2
 
-#define MainNumber 1
-
-#if MainNumber == 1
-
-void KeyBoard(unsigned char key, int x, int y);
-void Mouse(int button, int state, int x, int y);
-void Motion(int x, int y);
-void FrameTimer(int value);
+#include "Afx.h"
 
 void make_vertexShaders();
 void make_fragmentShaders();
-GLuint make_shaderProgram();
+void InitShader();
+void FrameTimer(int value);
+
 GLvoid drawScene();
 GLvoid Reshape(int w, int h);
-GLvoid UpdateBuffer();
-void InitShader();
-void InitTriangle();
-void SetRandomWindowColor();
+void KeyBoard(unsigned char key, int x, int y);
+void Mouse(int button, int state, int x, int y);
+void Motion(int x, int y);
 
-void Move();
-
-GLint width, height;
 GLuint shaderID; //--- 세이더 프로그램 이름
 GLuint vertexShader; //--- 버텍스 세이더 객체
 GLuint fragmentShader; //--- 프래그먼트 세이더 객체
-GLuint s_program;
+
+
+#if MainNumber == 1
+
+#include "GL_Triangle.h"
+#include "GL_Whirlwind.h"
+
+
+GLvoid UpdateBuffer();
+
+void InitObject();
+void SetRandomWindowColor();
+
+void Move();
 
 Vector2 scale = { 1,1 };
 bool isSizeUp = true;
@@ -64,8 +67,6 @@ unsigned int index[] = {
 int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 {
 	//--- 윈도우 생성하기
-	//windowSize_W = 500;
-	//windowSize_H = 500;
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
@@ -76,18 +77,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glewInit();
 
 	InitShader();
-	InitTriangle();
-
-	glGenVertexArrays(1, &BAO);
-	glGenBuffers(1, &BAO_Dot);
-	glBindVertexArray(BAO);
-	glBindBuffer(GL_ARRAY_BUFFER, BAO_Dot);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vPositionList), vPositionList, GL_STATIC_DRAW);
-	glGenBuffers(1, &BAO_Index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BAO_Index); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(index), index, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
-	glEnableVertexAttribArray(0);
+	InitObject();
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -147,6 +137,8 @@ void KeyBoard(unsigned char key, int x, int y)
 	case 'n':
 		wObj.OnDrawAnimaiton = !wObj.OnDrawAnimaiton;
 		break;
+	case 'm':
+		wObj.OnMoveAnimaiton = !wObj.OnMoveAnimaiton;
 		break;
 	default:
 		break;
@@ -215,34 +207,6 @@ void Motion(int x, int y)
 	}
 
 	glutPostRedisplay();
-}
-
-void FrameTimer(int value)
-{
-	glutPostRedisplay();
-}
-
-void make_vertexShaders()
-{
-	GLchar* vertexSource;
-	//GLuint vertexShader;
-	//--- 버텍스 세이더 읽어 저장하고 컴파일 하기
-	//--- filetobuf: 사용자정의 함수로 텍스트를 읽어서 문자열에 저장하는 함수
-	vertexSource = filetobuf("Vertex.glsl");
-
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, (const GLchar**)&vertexSource, 0);
-	glCompileShader(vertexShader);
-
-	GLint result;
-	GLchar errorLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &result);
-	if (!result)
-	{
-		glGetShaderInfoLog(vertexShader, 512, NULL, errorLog);
-		cerr << "ERROR: vertex shader 컴파일 실패\n" << errorLog << endl;
-		return;
-	}
 }
 
 GLvoid drawScene() //--- 콜백 함수: 그리기 콜백 함수
@@ -364,33 +328,19 @@ GLvoid UpdateBuffer()
 	}
 }
 
-void InitShader()
+void InitObject()
 {
-	GLint result;
-	GLchar errorLog[512];
+	glGenVertexArrays(1, &BAO);
+	glGenBuffers(1, &BAO_Dot);
+	glBindVertexArray(BAO);
+	glBindBuffer(GL_ARRAY_BUFFER, BAO_Dot);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vPositionList), vPositionList, GL_STATIC_DRAW);
+	glGenBuffers(1, &BAO_Index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, BAO_Index); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(index), index, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+	glEnableVertexAttribArray(0);
 
-	make_vertexShaders(); //--- 버텍스 세이더 만들기
-	make_fragmentShaders(); //--- 프래그먼트 세이더 만들기
-	//-- shader Program
-	s_program = glCreateProgram();
-	glAttachShader(s_program, vertexShader);
-	glAttachShader(s_program, fragmentShader);
-	glLinkProgram(s_program);
-	glGetProgramiv(s_program, GL_LINK_STATUS, &result); // ---세이더가 잘 연결되었는지 체크하기
-	if (!result) {
-		glGetProgramInfoLog(s_program, 512, NULL, errorLog);
-		cerr << "ERROR: shader program 연결 실패\n" << errorLog << endl;
-		return;
-	}
-	//--- 세이더 삭제하기
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-	//--- Shader Program 사용하기
-	glUseProgram(s_program);
-}
-
-void InitTriangle()
-{
 	obj[0].transform.Position = { 0,0 };
 
 	//obj[1].transform.Position = { 100,100 };
@@ -415,7 +365,7 @@ void SetRandomWindowColor()
 
 void Move()
 {
-	if (wObj.isActive)
+	if (wObj.isActive && wObj.OnMoveAnimaiton)
 	{
 		wObj.transform.Rotation.x = ((int)wObj.transform.Rotation.x + 1) % 360 ;
 	}
@@ -476,6 +426,241 @@ void Move()
 	}
 }
 
+
+#elif MainNumber == 2
+
+#include "Shape.h"
+#include "GL_Window.h"
+
+void InitObject();
+void UpdateObject();
+
+#define ShapeCount 4
+
+Vector2 line_Dot[] = {
+	{-1,0},
+	{1, 0},
+	{0, -1},
+	{0, 1}
+};
+
+int line_Index[] = {
+	0,1,
+	2,3
+};
+
+int maxShapeSize = 15;
+
+GLuint line_AVO, line_AVO_Dot, line_AVO_Index;
+
+Shape* shape_Obj = new Shape[ShapeCount];
+GL_Window window_Obj;
+
+
+int main(int argc, char** argv)
+{
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(windowSize_W, windowSize_H);
+	glutCreateWindow("Example1");
+	//--- GLEW 초기화하기
+	glewExperimental = GL_TRUE;
+	glewInit();
+
+	InitShader();
+	InitObject();
+
+	glutDisplayFunc(drawScene);
+	glutReshapeFunc(Reshape);
+	glutKeyboardFunc(KeyBoard);
+	glutMouseFunc(Mouse);
+	glutMotionFunc(Motion);
+	glutMainLoop();
+}
+
+GLvoid drawScene()
+{
+	glClearColor(windowColor.R, windowColor.G, windowColor.B, windowColor.A);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	UpdateObject();
+
+	glutSwapBuffers();
+	Time_Duration = floor(difftime(time(NULL), Start_Time));
+	glutTimerFunc(1000 / 60 - Time_Duration, FrameTimer, 1);
+	Start_Time = time(NULL);
+}
+
+GLvoid Reshape(int w, int h)
+{
+	glViewport(0, 0, w, h);
+
+	windowSize_W = w;
+	windowSize_H = h;
+}
+
+void KeyBoard(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	case 't':
+		glutFullScreenToggle();
+		if (isFullScreen)
+			glutLeaveFullScreen();
+		isFullScreen = !isFullScreen;
+		break;
+		
+	case 'z':
+		for (int i = 0; i < ShapeCount; i++)
+			shape_Obj[i].isActive = !shape_Obj[i].isActive;
+		break;
+
+	case '=':
+		for (int i = 0; i < ShapeCount; i++)
+		{
+			shape_Obj[i].shapeSize++;
+			if (shape_Obj[i].shapeSize > maxShapeSize)
+				shape_Obj[i].shapeSize = 1;
+		}
+		break;
+	case '-':
+		for (int i = 0; i < ShapeCount; i++)
+		{
+			shape_Obj[i].shapeSize--;
+			if (shape_Obj[i].shapeSize <= 0)
+				shape_Obj[i].shapeSize = maxShapeSize;
+		}
+	case 'a':
+		for (int i = 0; i < ShapeCount; i++)
+		{
+			shape_Obj[i].isChagneShapeAni = !shape_Obj[i].isChagneShapeAni;
+		}
+		break;
+	case 'w':
+		window_Obj.isActive = !window_Obj.isActive;
+		break;
+	}
+
+
+	glutPostRedisplay();
+}
+
+void Mouse(int button, int state, int x, int y)
+{
+	StartMouse = { (float)x, (float)y };
+	StartMouse = Coordinate(StartMouse);
+	StartMouse.y = -StartMouse.y;
+
+	window_Obj.OnPointClick(StartMouse);
+	window_Obj.CheckInBox(StartMouse);
+
+	glutPostRedisplay();
+}
+
+void Motion(int x, int y)
+{
+	Vector2 mouse_Pos = { (float)x, (float)y };
+	mouse_Pos = Coordinate(mouse_Pos);
+	mouse_Pos.y = -mouse_Pos.y;
+
+	if (window_Obj.MouseDot != nullptr)
+	{
+		window_Obj.MouseDot->Position = mouse_Pos - window_Obj.transform.Position;
+	}
+	else if (window_Obj.RotateDot)
+	{
+		double dgree = atan2(mouse_Pos.x, mouse_Pos.y);
+		window_Obj.transform.Rotation.x = dgree * 180 / PI;
+		window_Obj.SetRotateDot();
+	}
+	else if (window_Obj.isInside)
+	{
+		Vector2 Move_Mouse_Pos = mouse_Pos - StartMouse;
+
+		window_Obj.transform.Position = window_Obj.transform.Position + Move_Mouse_Pos;
+	}
+
+	StartMouse = { (float)x, (float)y };
+	StartMouse = Coordinate(StartMouse);
+	StartMouse.y = -StartMouse.y;
+	glutPostRedisplay();
+}
+
+void InitObject()
+{
+	shape_Obj[0].transform.Position = { (float) -windowSize_W / 4, (float) -windowSize_H / 4};
+	shape_Obj[1].transform.Position = { (float) windowSize_W / 4, (float) -windowSize_H / 4};
+	shape_Obj[2].transform.Position = { (float) -windowSize_W / 4, (float)  windowSize_H / 4};
+	shape_Obj[3].transform.Position = { (float) windowSize_W / 4, (float) windowSize_H / 4};
+
+	for (int i = 0; i < ShapeCount; i++)
+	{
+		shape_Obj[i].SetColor();
+		shape_Obj[i].RandomRadius();
+
+		shape_Obj[i].shapeSize = i + 1;
+		if (shape_Obj[i].shapeSize > maxShapeSize)
+			shape_Obj[i].shapeSize = 1;
+	}
+
+	window_Obj.SetColor();
+
+	glGenVertexArrays(1, &line_AVO);
+	glGenBuffers(1, &line_AVO_Dot);
+	glBindVertexArray(line_AVO);
+	glBindBuffer(GL_ARRAY_BUFFER, line_AVO_Dot);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(line_Dot), line_Dot, GL_STATIC_DRAW);
+	glGenBuffers(1, &line_AVO_Index);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, line_AVO_Index); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(line_Index), line_Index, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+	glEnableVertexAttribArray(0);
+}
+
+void UpdateObject()
+{
+	for (int i = 0; i < ShapeCount; i++)
+	{
+		shape_Obj[i].Draw();
+	}
+
+	window_Obj.Draw();
+
+	glBindVertexArray(line_AVO);
+	glUniform4f(0, 1, 1, 1, 1);
+	glDrawElements(GL_LINES, 4, GL_UNSIGNED_INT, 0);
+
+	glutPostRedisplay();
+}
+
+#endif
+
+#pragma region Defualt_Funtion
+
+void make_vertexShaders()
+{
+	GLchar* vertexSource;
+	//GLuint vertexShader;
+	//--- 버텍스 세이더 읽어 저장하고 컴파일 하기
+	//--- filetobuf: 사용자정의 함수로 텍스트를 읽어서 문자열에 저장하는 함수
+	vertexSource = filetobuf("Vertex.glsl");
+
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, (const GLchar**)&vertexSource, 0);
+	glCompileShader(vertexShader);
+
+	GLint result;
+	GLchar errorLog[512];
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &result);
+	if (!result)
+	{
+		glGetShaderInfoLog(vertexShader, 512, NULL, errorLog);
+		cerr << "ERROR: vertex shader 컴파일 실패\n" << errorLog << endl;
+		return;
+	}
+}
+
 void make_fragmentShaders()
 {
 	GLchar* fragmentSource;
@@ -497,28 +682,34 @@ void make_fragmentShaders()
 	}
 }
 
-GLuint make_shaderProgram()
+void InitShader()
 {
-	GLuint ShaderProgramID;
 	GLint result;
 	GLchar errorLog[512];
 
 	make_vertexShaders(); //--- 버텍스 세이더 만들기
 	make_fragmentShaders(); //--- 프래그먼트 세이더 만들기
-
-	ShaderProgramID = glCreateProgram(); //--- 세이더 프로그램 만들기
-	glAttachShader(ShaderProgramID, vertexShader); //--- 세이더 프로그램에 버텍스 세이더 붙이기
-	glAttachShader(ShaderProgramID, fragmentShader); //--- 세이더 프로그램에 프래그먼트 세이더 붙이기
-	glLinkProgram(ShaderProgramID); //--- 세이더 프로그램 링크하기
-	glDeleteShader(vertexShader); //--- 세이더 객체를 세이더 프로그램에 링크했음으로, 세이더 객체 자체는 삭제 가능
-	glDeleteShader(fragmentShader);
-	glGetProgramiv(ShaderProgramID, GL_LINK_STATUS, &result); // ---세이더가 잘 연결되었는지 체크하기
+	//-- shader Program
+	s_program = glCreateProgram();
+	glAttachShader(s_program, vertexShader);
+	glAttachShader(s_program, fragmentShader);
+	glLinkProgram(s_program);
+	glGetProgramiv(s_program, GL_LINK_STATUS, &result); // ---세이더가 잘 연결되었는지 체크하기
 	if (!result) {
-		glGetProgramInfoLog(ShaderProgramID, 512, NULL, errorLog);
+		glGetProgramInfoLog(s_program, 512, NULL, errorLog);
 		cerr << "ERROR: shader program 연결 실패\n" << errorLog << endl;
-		return false;
+		return;
 	}
-	glUseProgram(ShaderProgramID);
-	return ShaderProgramID;
+	//--- 세이더 삭제하기
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+	//--- Shader Program 사용하기
+	glUseProgram(s_program);
 }
-#endif
+
+void FrameTimer(int value)
+{
+	glutPostRedisplay();
+}
+
+#pragma endregion

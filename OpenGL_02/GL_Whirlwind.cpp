@@ -3,6 +3,7 @@
 GL_Whirlwind::GL_Whirlwind() : Object()
 {
 	OnDrawAnimaiton = false;
+	OnMoveAnimaiton = false;
 	DrawAniCount = 0;
 
 	Radius = 100;
