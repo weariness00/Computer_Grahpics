@@ -1,3 +1,4 @@
-﻿  GL_Cube.cpp
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\Afx.h(74,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'ObjectBlock' 왼쪽은 무시됩니다.
+﻿  GL_Tetrahedron.cpp
+  main.cpp
+  코드를 생성하고 있습니다...
   OpenGL-03.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\Debug\OpenGL-03.exe

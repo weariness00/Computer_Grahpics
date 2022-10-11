@@ -12,9 +12,9 @@ public:
 private:
 	void Init();
 
-
 public:
-	
+	bool isActiveFace[6];
+	Color faceColor[6];
 
 private:
 	ObjectBlock block;

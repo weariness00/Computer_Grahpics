@@ -33,6 +33,12 @@
     <ClCompile Include="GL_Cube.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GL_Tetrahedron.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Afx.h">
@@ -50,6 +56,12 @@
     <ClInclude Include="GL_Cube.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GL_Tetrahedron.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Fragment.glsl">
@@ -61,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Object Include="Cube.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="Tetrahedron.obj">
       <Filter>리소스 파일</Filter>
     </Object>
   </ItemGroup>

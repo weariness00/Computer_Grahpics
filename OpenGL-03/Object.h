@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Collider.h"
+#include "Color.h"
 
 class Object {
 public:
@@ -9,10 +10,6 @@ public:
 
 public:
 	void virtual Update();
-
-public:
-	void virtual SetColor(Color c);
-	void virtual SetColor();
 
 public:
 	string name;

@@ -1,6 +1,7 @@
 #define MainNumber 1
 
 #include "GL_Cube.h"
+#include "GL_Tetrahedron.h"
 
 void drawScene();
 GLvoid Reshape(int w, int h);
@@ -8,6 +9,10 @@ void KeyBoard(unsigned char key, int x, int y);
 void Mouse(int button, int state, int x, int y);
 void Motion(int x, int y);
 void ReadObj(char* fileName);
+
+void InitMain();
+
+Color windowColor;
 
 Vector2 Dot[] = {
 	{-0.5f,0},
@@ -18,6 +23,7 @@ Vector2 Dot[] = {
 GLuint VAO, VAO_Dot;
 
 GL_Cube cube_Object;
+GL_Tetrahedron diamond_Object;
 
 #if MainNumber == 1
 
@@ -29,7 +35,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(windowSize_W, windowSize_H);
 	glutCreateWindow("Example1");
 	
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
@@ -39,15 +45,13 @@ int main(int argc, char** argv)
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//// GL_LINE : 폴리곤을 선으로 그리기
-	//// GL_FILL : 폴리곤을 색상으로 채우기
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 	//--- GLEW 초기화하기
 	glewExperimental = GL_TRUE;
 	glewInit();
 
 	InitShader();
+
+	InitMain();
 
 	//glGenVertexArrays(1, &VAO);
 	//glGenBuffers(1, &VAO_Dot);
@@ -56,10 +60,8 @@ int main(int argc, char** argv)
 	//glBindBuffer(GL_ARRAY_BUFFER, VAO_Dot);
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(Dot), Dot, GL_STATIC_DRAW);
 	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-	//glEnableVertexAttribArray(0);
-
-	//InitObject();
-	cube_Object.isActive = true;
+	//glEnableVertexAttribArray(0)
+	
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -71,6 +73,7 @@ int main(int argc, char** argv)
 
 void drawScene()
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glUseProgram(s_program);
 	//glm::mat4 model = glm::mat4(1.0f);
 	////--- 적용할 모델링 변환 행렬 만들기
@@ -86,6 +89,7 @@ void drawScene()
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	cube_Object.Draw();
+	diamond_Object.Draw();
 
 	glutSwapBuffers();
 }
@@ -108,8 +112,67 @@ void KeyBoard(unsigned char key, int x, int y)
 			glutLeaveFullScreen();
 		isFullScreen = !isFullScreen;
 		break;
-	}
+	case 'a':
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		break;
+	case 'b':
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		break;
+	case '1':
+		cube_Object.isActiveFace[0] = !cube_Object.isActiveFace[0];
+		break;
+	case '2':
+		cube_Object.isActiveFace[1] = !cube_Object.isActiveFace[1];
+		break;
+	case '3':
+		cube_Object.isActiveFace[2] = !cube_Object.isActiveFace[2];
+		break;
+	case '4':
+		cube_Object.isActiveFace[3] = !cube_Object.isActiveFace[3];
+		break;
+	case '5':
+		cube_Object.isActiveFace[4] = !cube_Object.isActiveFace[4];
+		break;
+	case '6':
+		cube_Object.isActiveFace[5] = !cube_Object.isActiveFace[5];
+		break;
+	case 'z':
+		cube_Object.isActiveFace[0] = !cube_Object.isActiveFace[0];
+		cube_Object.isActiveFace[5] = !cube_Object.isActiveFace[5];
+		break;
+	case 'x':
+		cube_Object.isActiveFace[1] = !cube_Object.isActiveFace[1];
+		cube_Object.isActiveFace[4] = !cube_Object.isActiveFace[4];
+		break;
+	case 'c':
+		cube_Object.isActiveFace[2] = !cube_Object.isActiveFace[2];
+		cube_Object.isActiveFace[3] = !cube_Object.isActiveFace[3];
 
+	case '7':
+		diamond_Object.isActiveFace[0] = !diamond_Object.isActiveFace[0];
+		break;
+	case '8':
+		diamond_Object.isActiveFace[1] = !diamond_Object.isActiveFace[1];
+		break;
+	case '9':
+		diamond_Object.isActiveFace[2] = !diamond_Object.isActiveFace[2];
+		break;
+	case '0':
+		diamond_Object.isActiveFace[3] = !diamond_Object.isActiveFace[3];
+		break;
+	case 'q':
+		diamond_Object.isActiveFace[0] = !diamond_Object.isActiveFace[0];
+		diamond_Object.isActiveFace[1] = !diamond_Object.isActiveFace[1];
+		break;
+	case 'w':
+		diamond_Object.isActiveFace[0] = !diamond_Object.isActiveFace[0];
+		diamond_Object.isActiveFace[2] = !diamond_Object.isActiveFace[2];
+		break;
+	case 'e':
+		diamond_Object.isActiveFace[0] = !diamond_Object.isActiveFace[0];
+		diamond_Object.isActiveFace[3] = !diamond_Object.isActiveFace[3];
+		break;
+	}
 
 	glutPostRedisplay();
 }
@@ -122,7 +185,7 @@ void Mouse(int button, int state, int x, int y)
 
 	Vector2 realStartMouse = RealPosition(StartMouse);
 
-	cube_Object.transform.Position = vec3 (realStartMouse.x, realStartMouse.y, cube_Object.transform.Position.z);
+	cube_Object.transform.Position = vec3(realStartMouse.x, realStartMouse.y, cube_Object.transform.Position.z);
 
 	glutPostRedisplay();
 }
@@ -137,6 +200,14 @@ void Motion(int x, int y)
 	StartMouse = Coordinate(StartMouse);
 	StartMouse.y = -StartMouse.y;
 	glutPostRedisplay();
+}
+
+void InitMain() 
+{
+	windowColor.R = windowColor.G = windowColor.B = 0;
+
+	cube_Object.isActive = true;
+	diamond_Object.isActive = true;
 }
 
 

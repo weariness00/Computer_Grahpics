@@ -53,23 +53,10 @@ typedef struct Position2 {
 	int y;
 }Position2;
 
-typedef struct Color3 {
-	GLclampf R;
-	GLclampf G;
-	GLclampf B;
-}Color3;
-
-typedef struct Color {
-	GLclampf R;
-	GLclampf G;
-	GLclampf B;
-	GLclampf A;
-}Color;
-
 typedef struct Face {
-	unsigned short* a;
-	unsigned short* b;
-	unsigned short* c;
+	unsigned short a;
+	unsigned short b;
+	unsigned short c;
 }Face;
 
 typedef struct ObjectBlock {
@@ -93,9 +80,9 @@ ostream& operator<< (ostream& outputStream, const Vector2& my);
 Position2 operator+(const Position2 my, const Position2 other);
 
 ostream& operator<< (ostream& outputStream, const vec3& my);
+ostream& operator<< (ostream& outputStream, const Face& my);
 
 extern Vector2 window_RealPos;
-extern Color windowColor;
 extern Vector2 StartMouse;
 
 char* filetobuf(const char* file);

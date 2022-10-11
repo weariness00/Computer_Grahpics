@@ -135,8 +135,13 @@ ostream& operator<< (ostream& outputStream, const vec3& my)
 	return outputStream;
 }
 
+ostream& operator<< (ostream& outputStream, const Face& my)
+{
+	cout << my.a << ", " << my.b << ", " << my.c;
+	return outputStream;
+}
+
 Vector2 window_RealPos = RealPosition({ 1, 1 });
-Color windowColor = { 0,0,0,1 };
 Vector2 StartMouse = { 0,0 };
 
 
@@ -282,7 +287,7 @@ void ReadObj(char* fileName, ObjectBlock& block)
 
 				--i;
 			}
-			block.face[block.faceIndex] = faces;
+			block.face[block.faceIndex] = { faces[0], faces[1], faces[2] };
 			block.faceIndex++;	
 			//fscanf(obj, "%f %f %f",
 			//	&block.face[block.faceIndex].x,
