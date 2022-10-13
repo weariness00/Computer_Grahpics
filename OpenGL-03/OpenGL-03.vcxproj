@@ -132,6 +132,7 @@
     <ClCompile Include="Afx.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="GL_Coordinate.cpp" />
     <ClCompile Include="GL_Cube.cpp" />
     <ClCompile Include="GL_Tetrahedron.cpp" />
     <ClCompile Include="main.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Afx.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="GL_Coordinate.h" />
     <ClInclude Include="GL_Cube.h" />
     <ClInclude Include="GL_Tetrahedron.h" />
     <ClInclude Include="Object.h" />
@@ -152,6 +154,9 @@
     <None Include="Vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <Object Include="Coordinate.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </Object>
     <Object Include="Cube.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </Object>

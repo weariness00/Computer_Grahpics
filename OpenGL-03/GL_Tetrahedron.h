@@ -9,15 +9,31 @@ public:
 
 public:
 	void Draw();
+	void Init();
 
 private:
-	void Init();
+	void MoveMent();
+	
 
 public:
 	bool isActiveFace[4];
+
+	bool isPrismColor;
+
+	vec3 speed;
+	vec3 rotateSpeed;
 
 private:
 	ObjectBlock block;
 
 	Color faceColor[4];
+
+	GLuint VAO_Color;
+	GLclampf prismColor[4 * 5] = {
+		1, 0, 0, 1,
+		0, 1, 0, 1,
+		0, 0, 1, 1,
+		1, 1, 0, 1,
+		0, 1, 1, 1,
+	};
 };
