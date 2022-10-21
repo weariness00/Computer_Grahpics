@@ -9,10 +9,10 @@ public:
 public:
 	void Draw();
 	void Init();
+	void ReSet();
 
 private:
 	void MoveMent();
-	
 
 public:
 	bool isActiveFace[6];
@@ -25,6 +25,8 @@ public:
 
 	vec3 coordinateRotate;
 
+	vec3 originScale;
+
 private:
 	ObjectBlock block;
 
@@ -34,9 +36,9 @@ private:
 	0, 1, 0, 1,
 	0, 0, 1, 1,
 	1, 1, 0, 1,
+	1, 1, 1, 1,
 	0, 1, 1, 1,
 	1, 0, 1, 1,
-	1, 1, 1, 1,
-	0, 0, 0.5f, 1
+	1, 1, 1, 1
 	};
 };

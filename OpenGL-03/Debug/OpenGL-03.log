@@ -1,2 +1,76 @@
-﻿  GL_Coordinate.cpp
+﻿  main.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(37,2): warning C4091: 'typedef ': 변수를 선언하지 않으면 'Shape_Objet' 왼쪽은 무시됩니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(117,23): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(175,36): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(179,36): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(183,36): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(187,36): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(194,46): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(198,46): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(209,31): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(210,38): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(213,31): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(214,38): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(217,31): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(218,38): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(221,31): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(222,38): warning C4244: '=': 'int'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(496,32): warning C4244: '인수': 'int'에서 'const float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\main.cpp(513,82): warning C4244: '인수': 'int'에서 'const float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   OpenGL-03.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\Debug\OpenGL-03.exe

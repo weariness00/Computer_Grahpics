@@ -135,6 +135,7 @@
     <ClCompile Include="GL_Coordinate.cpp" />
     <ClCompile Include="GL_Cube.cpp" />
     <ClCompile Include="GL_Tetrahedron.cpp" />
+    <ClCompile Include="GL_Whirlwind.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="GL_Coordinate.h" />
     <ClInclude Include="GL_Cube.h" />
     <ClInclude Include="GL_Tetrahedron.h" />
+    <ClInclude Include="GL_Whirlwind.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>

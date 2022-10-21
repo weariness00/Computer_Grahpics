@@ -48,6 +48,12 @@ typedef struct Vector2 {
 	GLfloat y;
 }Vector2;
 
+typedef struct Vector3 {
+	GLfloat x;
+	GLfloat y;
+	GLfloat z;
+}Vector3;
+
 typedef struct Position2 {
 	int x;
 	int y;
@@ -82,8 +88,14 @@ Position2 operator+(const Position2 my, const Position2 other);
 ostream& operator<< (ostream& outputStream, const vec3& my);
 ostream& operator<< (ostream& outputStream, const Face& my);
 
+vec3 operator* (const vec3 my, const float other);
+vec3 operator/ (const vec3 my, const float other);
+bool operator== (const vec3 my, const float other);
+
 extern Vector2 window_RealPos;
 extern Vector2 StartMouse;
+
+float DistanceVec3(const vec3 my, const vec3 other);
 
 char* filetobuf(const char* file);
 void make_vertexShaders();

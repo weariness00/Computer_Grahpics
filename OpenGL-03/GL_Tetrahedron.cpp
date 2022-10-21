@@ -18,11 +18,12 @@ void GL_Tetrahedron::Draw()
 	MoveMent();
 	glUseProgram(s_program);
 
-	for (int i = 0; i < 8; i++)
-		prismColor[4 * (i + 1) - 1] = 0;
+
+	for (int i = 0; i < 4; i++)
+		faceColor[i].A = 1;
 	if (isPrismColor)
-		for (int i = 0; i < 8; i++)
-			prismColor[4 * (i + 1) - 1] = 1;
+		for (int i = 0; i < 4; i++)
+			faceColor[i].A = 0;
 
 	glBindBuffer(GL_ARRAY_BUFFER, VAO_Color);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(prismColor), prismColor, GL_STATIC_DRAW);
@@ -31,9 +32,9 @@ void GL_Tetrahedron::Draw()
 	glEnableVertexAttribArray(1);
 
 	mat4 model = translate(mat4(1.0), transform.Position);
-	model = rotate(model, radians(transform.Rotation.x), vec3(0, 0, 1.0));
+	model = rotate(model, radians(transform.Rotation.x), vec3(1.0, 0, 0));
 	model = rotate(model, radians(transform.Rotation.y), vec3(0, 1.0, 0));
-	model = rotate(model, radians(transform.Rotation.z), vec3(1.0, 0, 0));
+	model = rotate(model, radians(transform.Rotation.z), vec3(0, 0, 1.0));
 	model = scale(model, transform.Scale);
 
 	int modelLocation = glGetUniformLocation(s_program, "modelTransform");
@@ -89,4 +90,7 @@ void GL_Tetrahedron::Init()
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), 0);
 	glEnableVertexAttribArray(0);
+
+	delete block.vertex;
+	delete block.face;
 }

@@ -10,6 +10,7 @@ public:
 
 public:
 	void virtual Update();
+	void virtual ExpensionScale();
 
 public:
 	string name;
@@ -18,7 +19,9 @@ public:
 	Color color;
 
 	bool isActive;
+	float now_S;
 
 protected:
 	GLuint VAO, VAO_Dot, VAO_Index;
+	int imagnaryNumber;
 };

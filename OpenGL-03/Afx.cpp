@@ -141,8 +141,46 @@ ostream& operator<< (ostream& outputStream, const Face& my)
 	return outputStream;
 }
 
+vec3 operator* (const vec3 my, const float other)
+{
+	vec3 result = my;
+	result.x = my.x * other;
+	result.y = my.y * other;
+	result.z = my.z * other;
+
+	return result;
+}
+
+vec3 operator/ (const vec3 my, const float other)
+{
+	vec3 result = my;
+	result.x = my.x / other;
+	result.y = my.y / other;
+	result.z = my.z / other;
+
+	return result;
+}
+
+
+bool operator== (const vec3 my, const float other)
+{
+	if (my.x != other) return false;
+	if (my.y != other)return false;
+	if (my.z != other)return false;
+
+	return true;
+}
+
 Vector2 window_RealPos = RealPosition({ 1, 1 });
 Vector2 StartMouse = { 0,0 };
+
+float DistanceVec3(const vec3 my, const vec3 other)
+{
+	return sqrt(abs(pow(my.x - other.x, 2)) +
+		abs(pow(my.y - other.y, 2)) +
+		abs(pow(my.z - other.z, 2))
+	);
+}
 
 
 #pragma region Defualt_Funtion

@@ -19,4 +19,17 @@ public:
 
 private:
 	ObjectBlock block;
+
+	GLuint VAO_xLine, VAO_xLine_Dot, VAO_Color;
+
+	GLclampf prismColor[4 * 6] = {
+	1, 0, 0, 0,
+	0, 1, 0, 0,
+	0, 0, 1, 0,
+	1, 1, 0, 0,
+	0, 1, 1, 0,
+	1, 0, 1, 0
+	};
+
+	int maxVertexNumber = 0;
 };
