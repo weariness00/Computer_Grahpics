@@ -1,0 +1,66 @@
+﻿  Afx.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_04\Afx.cpp(24,22): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_04\Afx.cpp(179,13): warning C4244: 'return': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Camera.cpp
+  Color.cpp
+  GL_Coordinate.cpp
+  GL_Cube.cpp
+  GL_Tetrahedron.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_04\GL_Tetrahedron.cpp(57,70): warning C4312: '형식 캐스트': 'int'에서 더 큰 'GLvoid *'(으)로의 변환입니다.
+  main.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_04\main.cpp(58,23): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_04\main.cpp(91,2): warning C4060: switch문에 'case' 또는 'default' 레이블이 없습니다.
+  Object.cpp
+  Transform.cpp
+  코드를 생성하고 있습니다...
+Afx.obj : error LNK2019: __imp___glewAttachShader"void __cdecl InitShader(void)" (?InitShader@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewCompileShader"void __cdecl make_fragmentShaders(void)" (?make_fragmentShaders@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewCreateProgram"void __cdecl InitShader(void)" (?InitShader@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewCreateShader"void __cdecl make_fragmentShaders(void)" (?make_fragmentShaders@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewDeleteShader"void __cdecl InitShader(void)" (?InitShader@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewGetProgramInfoLog"void __cdecl InitShader(void)" (?InitShader@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewGetProgramiv"void __cdecl InitShader(void)" (?InitShader@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewGetShaderInfoLog"void __cdecl make_fragmentShaders(void)" (?make_fragmentShaders@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewGetShaderiv"void __cdecl make_fragmentShaders(void)" (?make_fragmentShaders@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewLinkProgram"void __cdecl InitShader(void)" (?InitShader@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+Afx.obj : error LNK2019: __imp___glewShaderSource"void __cdecl make_fragmentShaders(void)" (?make_fragmentShaders@@YAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUseProgram
+Afx.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUseProgram
+Camera.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUseProgram
+GL_Coordinate.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUseProgram
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUseProgram
+Camera.obj : error LNK2019: __imp___glewGetUniformLocation"public: void __cdecl Camera::Init(void)" (?Init@Camera@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Coordinate.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewGetUniformLocation
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewGetUniformLocation
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewGetUniformLocation
+Camera.obj : error LNK2019: __imp___glewUniformMatrix4fv"public: void __cdecl Camera::Init(void)" (?Init@Camera@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Coordinate.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUniformMatrix4fv
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUniformMatrix4fv
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUniformMatrix4fv
+GL_Coordinate.obj : error LNK2019: __imp___glewBindBuffer"public: void __cdecl GL_Coordinate::Init(void)" (?Init@GL_Coordinate@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewBindBuffer
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewBindBuffer
+GL_Coordinate.obj : error LNK2019: __imp___glewBufferData"public: void __cdecl GL_Coordinate::Init(void)" (?Init@GL_Coordinate@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewBufferData
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewBufferData
+GL_Coordinate.obj : error LNK2019: __imp___glewGenBuffers"public: void __cdecl GL_Coordinate::Init(void)" (?Init@GL_Coordinate@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewGenBuffers
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewGenBuffers
+GL_Coordinate.obj : error LNK2019: __imp___glewEnableVertexAttribArray"public: void __cdecl GL_Coordinate::Init(void)" (?Init@GL_Coordinate@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewEnableVertexAttribArray
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewEnableVertexAttribArray
+GL_Coordinate.obj : error LNK2019: __imp___glewUniform4f"public: void __cdecl GL_Coordinate::Draw(void)" (?Draw@GL_Coordinate@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUniform4f
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewUniform4f
+GL_Coordinate.obj : error LNK2019: __imp___glewVertexAttribPointer"public: void __cdecl GL_Coordinate::Init(void)" (?Init@GL_Coordinate@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewVertexAttribPointer
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewVertexAttribPointer
+GL_Coordinate.obj : error LNK2019: __imp___glewBindVertexArray"public: void __cdecl GL_Coordinate::Draw(void)" (?Draw@GL_Coordinate@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewBindVertexArray
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewBindVertexArray
+GL_Coordinate.obj : error LNK2019: __imp___glewGenVertexArrays"public: void __cdecl GL_Coordinate::Init(void)" (?Init@GL_Coordinate@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+GL_Cube.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewGenVertexArrays
+GL_Tetrahedron.obj : error LNK2001: 확인할 수 없는 외부 기호 __imp___glewGenVertexArrays
+main.obj : error LNK2019: __imp_glewInitmain 함수에서 참조되는 확인할 수 없는 외부 기호
+main.obj : error LNK2019: __imp_glewExperimentalmain 함수에서 참조되는 확인할 수 없는 외부 기호
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_04\x64\Debug\OpenGL_04.exe : fatal error LNK1120: 24개의 확인할 수 없는 외부 참조입니다.
