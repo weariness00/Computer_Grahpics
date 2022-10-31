@@ -1,0 +1,22 @@
+﻿  GL_Crane.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\GL_Crane.cpp(36,53): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\GL_Crane.cpp(40,55): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\GL_Crane.cpp(87,53): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\GL_Crane.cpp(90,55): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+  OpenGL_06.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\Debug\OpenGL_06.exe
