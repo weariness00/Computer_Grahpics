@@ -1,1 +1,2 @@
 D:\GItData\DongWoo_Computer_Grahpics\OpenGL-03\Debug\OpenGL-03.exe
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_03\Debug\OpenGL-03.exe

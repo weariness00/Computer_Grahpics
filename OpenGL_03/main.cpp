@@ -400,12 +400,12 @@ void SpecialKeyBoard(int key, int x, int y)
 		isWhirlwindAni = !isWhirlwindAni;
 
 		shape_Object[0].obj.transform.Rotation = whirlwind_Object.transform.Rotation;
-		shape_Object[0].whirlwindVertexNumber.x = 0;
-		shape_Object[0].whirlwindVertexNumber.y = 0;
+		shape_Object[0].whirlwindVertexNumber.x = 6;
+		shape_Object[0].whirlwindVertexNumber.y = int(whirlwind_Object.count[shape_Object[0].whirlwindVertexNumber.x] / 2);
 
 		shape_Object[1].obj.transform.Rotation = whirlwind_Object.transform.Rotation;
-		shape_Object[1].whirlwindVertexNumber.x = 0;
-		shape_Object[1].whirlwindVertexNumber.y = 0;
+		shape_Object[1].whirlwindVertexNumber.x = 7;
+		shape_Object[1].whirlwindVertexNumber.y = int(whirlwind_Object.count[shape_Object[1].whirlwindVertexNumber.x]/2);
 		break;
 	}
 }
