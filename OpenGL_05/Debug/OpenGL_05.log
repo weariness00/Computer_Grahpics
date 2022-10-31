@@ -1,0 +1,75 @@
+﻿  main.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(65,52): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(66,52): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(68,52): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(69,52): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(79,57): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(80,57): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(82,57): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(83,57): warning C4244: '=': 'double'에서 'T'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(95,23): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(163,50): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(166,55): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(167,55): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(171,51): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(174,56): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(175,56): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(264,38): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\main.cpp(276,38): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  OpenGL_05.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\OpenGL_05\Debug\OpenGL_05.exe
