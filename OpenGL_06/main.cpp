@@ -11,6 +11,11 @@ void Motion(int x, int y);
 void ReadObj(char* fileName);
 
 void InitMain();
+void Draw();
+
+Camera mainCamera;
+Camera xyCamera;
+Camera xzCamera;
 
 Color windowColor;
 
@@ -66,20 +71,20 @@ void drawScene()
 		if (crane_Object.cube_Object[Cube_Right].zRotate <= 90 && crane_Object.cube_Object[Cube_Right].zRotate > 0)
 		{
 			crane_Object.cube_Object[Cube_Left].zRotate += -1;
-			crane_Object.cube_Object[Cube_Left].worldSpeed.y = -0.001;
-			crane_Object.cube_Object[Cube_Left].worldSpeed.x = 0.001;
+			crane_Object.cube_Object[Cube_Left].worldSpeed.y = -0.0002;
+			crane_Object.cube_Object[Cube_Left].worldSpeed.x = 0.0005;
 			crane_Object.cube_Object[Cube_Right].zRotate += 1;
-			crane_Object.cube_Object[Cube_Right].worldSpeed.y = -0.001;
-			crane_Object.cube_Object[Cube_Right].worldSpeed.x = -0.001;
+			crane_Object.cube_Object[Cube_Right].worldSpeed.y = -0.0002;
+			crane_Object.cube_Object[Cube_Right].worldSpeed.x = -0.0005;
 		}
 		else if (crane_Object.cube_Object[Cube_Right].zRotate <= 0)
 		{
 			crane_Object.cube_Object[Cube_Left].zRotate += -1;
-			crane_Object.cube_Object[Cube_Left].worldSpeed.y = 0.001;
-			crane_Object.cube_Object[Cube_Left].worldSpeed.x = 0.001;
+			crane_Object.cube_Object[Cube_Left].worldSpeed.y = 0.0002;
+			crane_Object.cube_Object[Cube_Left].worldSpeed.x = 0.0005;
 			crane_Object.cube_Object[Cube_Right].zRotate += 1;
-			crane_Object.cube_Object[Cube_Right].worldSpeed.y = 0.001;
-			crane_Object.cube_Object[Cube_Right].worldSpeed.x = -0.001;
+			crane_Object.cube_Object[Cube_Right].worldSpeed.y = 0.0002;
+			crane_Object.cube_Object[Cube_Right].worldSpeed.x = -0.0005;
 		}
 		else
 		{
@@ -96,20 +101,20 @@ void drawScene()
 		if (crane_Object.cube_Object[Cube_Right].zRotate >= 0)
 		{
 			crane_Object.cube_Object[Cube_Left].zRotate += 1;
-			crane_Object.cube_Object[Cube_Left].worldSpeed.y = 0.001;
-			crane_Object.cube_Object[Cube_Left].worldSpeed.x = -0.001;
+			crane_Object.cube_Object[Cube_Left].worldSpeed.y = 0.0002;
+			crane_Object.cube_Object[Cube_Left].worldSpeed.x = -0.0005;
 			crane_Object.cube_Object[Cube_Right].zRotate += -1;
-			crane_Object.cube_Object[Cube_Right].worldSpeed.y = 0.001;
-			crane_Object.cube_Object[Cube_Right].worldSpeed.x = 0.001;
+			crane_Object.cube_Object[Cube_Right].worldSpeed.y = 0.0002;
+			crane_Object.cube_Object[Cube_Right].worldSpeed.x = 0.0005;
 		}
 		else if (crane_Object.cube_Object[Cube_Right].zRotate >= -90 && crane_Object.cube_Object[Cube_Right].zRotate < 0)
 		{
 			crane_Object.cube_Object[Cube_Left].zRotate += 1;
-			crane_Object.cube_Object[Cube_Left].worldSpeed.y = -0.001;
-			crane_Object.cube_Object[Cube_Left].worldSpeed.x = -0.001;
+			crane_Object.cube_Object[Cube_Left].worldSpeed.y = -0.0002;
+			crane_Object.cube_Object[Cube_Left].worldSpeed.x = -0.0005;
 			crane_Object.cube_Object[Cube_Right].zRotate += -1;
-			crane_Object.cube_Object[Cube_Right].worldSpeed.y = -0.001;
-			crane_Object.cube_Object[Cube_Right].worldSpeed.x = 0.001;
+			crane_Object.cube_Object[Cube_Right].worldSpeed.y = -0.0002;
+			crane_Object.cube_Object[Cube_Right].worldSpeed.x = 0.0005;
 		}
 		else
 		{
@@ -121,9 +126,26 @@ void drawScene()
 		}
 	}
 
-	coordinate_Object.Draw();
-	crane_Object.Draw();
-	plan_Object.Draw();
+	{
+		glViewport(50, windowSize_H/5, windowSize_W /2 , windowSize_H / 2);
+		Object::camera = &mainCamera;
+
+		Draw();
+	}
+	
+	{
+		glViewport(windowSize_W * 3 / 5, windowSize_H / 2, windowSize_W * 3 / 10, windowSize_H * 3 / 10);
+		Object::camera = &xyCamera;
+
+		Draw();
+	}
+
+	{
+		glViewport(windowSize_W * 3/ 5, 100, windowSize_W * 3 / 10, windowSize_H * 3 / 10);
+		Object::camera = &xzCamera;
+
+		Draw();
+	}
 
 	glutSwapBuffers();
 	Time_Duration = floor(difftime(time(NULL), Start_Time));
@@ -164,9 +186,9 @@ void KeyBoard(unsigned char key, int x, int y)
 			glDisable(GL_DEPTH_TEST);
 		}
 		break;
-	case 'p': // 직각 투영
-		isProjection = !isProjection;
-		break;
+	//case 'p': // 직각 투영
+	//	isProjection = !isProjection;
+	//	break;
 
 	case 'z':
 		mainCamera.transform.worldPosition.z += speed;
@@ -210,6 +232,16 @@ void KeyBoard(unsigned char key, int x, int y)
 
 	case 's':
 		isPressA = false;
+		isPress_T = false;
+		isPress_t = false;
+
+		crane_Object.worldSpeed.x = 0;
+		for (int i = 0; i < Cube_MaxIndex; i++)
+		{
+			crane_Object.cube_Object[i].worldRotateSpeed.y = 0;
+			crane_Object.cube_Object[i].worldSpeed.y = 0;
+			crane_Object.cube_Object[i].worldSpeed.x = 0;
+		}
 		break;
 	case 'c':
 		isPressA = false;
@@ -222,13 +254,13 @@ void KeyBoard(unsigned char key, int x, int y)
 		break;
 		
 	case 'b':
-		if(crane_Object.worldSpeed.x != 1)
+		if(crane_Object.worldSpeed.x == 0)
 			crane_Object.worldSpeed.x = speed;
 		else
 			crane_Object.worldSpeed.x = 0;
 		break;	
 	case 'B':
-		if (crane_Object.worldSpeed.x != -1)
+		if (crane_Object.worldSpeed.x == 0)
 			crane_Object.worldSpeed.x = -speed;
 		else
 			crane_Object.worldSpeed.x = 0;
@@ -333,9 +365,13 @@ void InitMain()
 {
 	windowColor.R = windowColor.G = windowColor.B = 0;
 
+	mainCamera.isProjection = true;
 	mainCamera.transform.localRotation.x = 45;
 	mainCamera.transform.localPivot.y = -3;
 	mainCamera.transform.worldPosition.z = -4.5;
+
+	xyCamera.isProjection_XY = true;
+	xzCamera.isProjection_XZ = true;
 
 	coordinate_Object.Init();
 	coordinate_Object.isActive = true;
@@ -349,4 +385,11 @@ void InitMain()
 	plan_Object.transform.worldScale.x *= 10;
 	plan_Object.transform.worldScale.z *= 10;
 	plan_Object.transform.worldPosition.y = -1;
+}
+
+void Draw()
+{
+	coordinate_Object.Draw();
+	crane_Object.Draw();
+	plan_Object.Draw();
 }

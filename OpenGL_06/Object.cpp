@@ -6,6 +6,8 @@
 
 //bool isProjection = true;
 
+Camera* Object::camera = nullptr;
+
 Object::Object()
 {
 	name = "UnName";

@@ -29,7 +29,7 @@ public:
 
 public:
 	string name;
-	Camera* camera;
+	static Camera* camera;
 	Transform transform;
 	Color color;
 

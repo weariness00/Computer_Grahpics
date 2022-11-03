@@ -64,7 +64,10 @@ void GL_Crane::ReSet()
 {
 	transform.ReSet();
 	for (int i = 0; i < Cube_MaxIndex; i++)
+	{
 		cube_Object[i].transform.ReSet();
+		cube_Object[i].zRotate = 0;
+	}
 
 	//¸öÃ¼
 	cube_Object[Cube_Body].transform.worldScale.y = 0.25;

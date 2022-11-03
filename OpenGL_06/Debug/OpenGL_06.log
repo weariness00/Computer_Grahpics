@@ -1,22 +1,83 @@
-﻿  GL_Crane.cpp
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\GL_Crane.cpp(36,53): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+﻿  main.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(74,62): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
           with
           [
               T=float
           ]
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\GL_Crane.cpp(40,55): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(75,61): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
           with
           [
               T=float
           ]
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\GL_Crane.cpp(87,53): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(77,63): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
           with
           [
               T=float
           ]
-D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\GL_Crane.cpp(90,55): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(78,63): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
           with
           [
               T=float
           ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(83,61): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(84,61): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(86,62): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(87,63): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(104,61): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(105,62): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(107,62): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(108,62): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(113,62): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(114,62): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(116,63): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(117,62): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\main.cpp(151,23): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   OpenGL_06.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\OpenGL_06\Debug\OpenGL_06.exe

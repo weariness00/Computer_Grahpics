@@ -27,8 +27,8 @@ void Cube::Draw()
 
 	Object::SetMatrix();
 
-	glPointSize(5.0f);
-	glDrawArrays(GL_POINTS, 0, block.vertIndex);
+	//glPointSize(5.0f);
+	//glDrawArrays(GL_POINTS, 0, block.vertIndex);
 	glDrawElements(GL_TRIANGLES, block.faceIndex * 3, GL_UNSIGNED_SHORT, 0);
 }
 

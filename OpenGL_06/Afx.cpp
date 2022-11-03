@@ -6,8 +6,8 @@ GLuint fragmentShader; //--- 프래그먼트 세이더 객체
 
 char default_Cube[] = "Cube.obj";
 
-int windowSize_W = 1080;
-int windowSize_H = 860;
+int windowSize_W = 1600;
+int windowSize_H = 900;
 
 bool isFullScreen = false;
 bool isOnTimer = false;

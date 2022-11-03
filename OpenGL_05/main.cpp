@@ -1,5 +1,3 @@
-#define MainNumber 1
-
 #include "GL_Atom.h"
 
 void drawScene();

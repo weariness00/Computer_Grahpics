@@ -1,12 +1,5 @@
 #include "Camera.h"
 
-bool isProjection = true;
-vec3 cameraPos = vec3(0.0f, 0.0f, 0.0f); //--- 카메라 위치
-vec3 cameraDirection; //--- 카메라 바라보는 방향
-vec3 cameraUp = vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향
-
-Camera mainCamera;
-
 Camera::Camera()
 {
 	isRotate = true;
@@ -20,12 +13,17 @@ void Camera::Draw()
 {
 	mat4 view = mat4(1.0f);
 	mat4 projection = mat4(1.0f);
-	if (isProjection)	// 직각 투영
+	float size = 2.0f;
+	if (isProjection_XY)	// 직각 투영
 	{
-		float size = 2.0f;
 		projection = ortho(-size, size, -size, size, -size, size);
 	}
-	else
+	else if (isProjection_XZ)
+	{
+		projection = ortho(-size, size, -size, size, -size, size);
+		projection = rotate(projection, radians(90.0f), vec3(1, 0, 0));
+	}
+	else if(isProjection)
 	{
 		view = lookAt(cameraPos, cameraDirection, cameraUp);
 
@@ -40,7 +38,7 @@ void Camera::Draw()
 		}
 		else
 		{
-			cameraPos = vec3(0.0f, 0.0f, 0.0001f); //--- 카메라 위치
+			cameraPos = vec3(0.0f, 0.0f, 0.1f); //--- 카메라 위치
 			cameraDirection = vec3(0.0f, 0.0f, 0.0f); //--- 카메라 바라보는 방향
 			
 			yR = 90;
