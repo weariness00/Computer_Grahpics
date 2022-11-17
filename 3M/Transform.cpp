@@ -2,9 +2,10 @@
 
 Transform::Transform()
 {
-	worldPosition = localPosition = worldPivot = localPivot = vec3(0,0,0);
-	worldRotation = localRotation = vec3(0, 0, 0);
-	worldScale = localScale = vec3(1,1,1);
+	worldPivot = localPivot = vec3(0);
+	worldPosition = localPosition = vec3(0);
+	worldRotation = localRotation = vec3(0);
+	worldScale = localScale = vec3(1);
 }
 
 Transform::~Transform()
@@ -39,12 +40,6 @@ void Transform::SetRandomRotate()
 	uniform_int_distribution<int> randomPos(0, 360);
 
 	worldRotation = { (float)randomPos(gen), 0 , 0};
-}
-
-void Transform::LookAt(float speed)
-{
-	worldPosition.x += speed * float(cos((worldRotation.x + 90) * (PI / 180)));
-	worldPosition.y += speed * float(sin((worldRotation.x + 90) * (PI / 180)));
 }
 
 void Transform::Info()

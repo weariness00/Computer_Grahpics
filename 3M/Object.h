@@ -4,45 +4,53 @@
 #include "Color.h"
 #include "Camera.h"
 
-//extern vec3 cameraPos;
-//extern vec3 cameraDirection;
-//extern vec3 cameraUp;
-
-//extern bool isProjection;
-
 class Object {
+public:
+	static int ID_Count;
+	static list<Object*> allObject;
+
+	static unsigned char key;
+	static int specialKey;
+
+	static int modelLocation;
+	static int vColorLocation;
+
 public:
 	Object();
 	~Object();
 
 public:
-	void virtual Update();
-	void virtual Init();
+	virtual void Update();
+	virtual void Init();
+	virtual void ObjcetDraw();
+	virtual void Collision();
 
-	void virtual Draw();
-	void lineDraw();
+	//virtual void Handle_Evnet();
+
+	void Info();
+public:
+	mat4& SetMatrix();
 
 public:
-	void SetMatrix();
-
-public:
+	int id;
 	string name;
 	Transform transform;
 	Color color;
 
-	bool isActive;
+	ObjectBlock block;
+	GLuint VAO;
 
+	bool isActive;
+public:
 	vec3 worldSpeed;
+	vec3 localSpeed;
+
 	vec3 worldPivotSpeed;
 
 	vec3 worldRotateSpeed;
 	vec3 localRotateSpeed;
 
-public:
-	static Camera* camera;
 
 protected:
-	GLuint VAO, VAO_Dot, VAO_Index;
-
-	ObjectBlock block;
+	GLuint VAO_Dot, VAO_Index;
 };

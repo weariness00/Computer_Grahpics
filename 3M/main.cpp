@@ -17,6 +17,9 @@ bool is_CullFace = false;
 
 Camera mainCamera;
 Camera mapCamera;
+Render objectRender;
+
+list<Object*> Object::allObject;
 
 Player player;
 GL_Maze maze_Object;
@@ -27,7 +30,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(windowSize_W, windowSize_H);
-	glutCreateWindow("Example1");
+	glutCreateWindow("21");
 	
 	glEnable(GL_DEPTH_TEST);
 
@@ -36,7 +39,25 @@ int main(int argc, char** argv)
 	glewInit();
 
 	InitShader();
-	InitMain();
+	{
+		windowColor.R = windowColor.G = windowColor.B = 0;
+
+		Render::mainRender = &objectRender;
+		Camera::mainCamera = &mainCamera;
+		mainCamera.transform.worldPosition.y = -0.5;
+		mainCamera.isProjection = true;
+		mapCamera.isProjection_XZ = true;
+
+		Object::modelLocation = glGetUniformLocation(s_program, "modelTransform");
+		Object::vColorLocation = glGetUniformLocation(s_program, "vColor");
+		FrameTime::currentTime = clock();
+
+		player.isActive = false;
+		for (const auto& obj : Object::allObject)
+		{
+			obj->Init();
+		}
+	}
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -51,30 +72,46 @@ void drawScene()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+	// 모든 오브젝트 업데이트
+	for (const auto& obj : Object::allObject)
+	{
+		if (!obj->isActive)
+			continue;
+		obj->Update();
+	}
+
+	// 모든 콜라이더 위치 업데이트
+	for (const auto& collider : Collider::allCollider)
+		collider->GetBox();
+
+	// 모든 충돌 처리
+	for (const auto& obj : Object::allObject)
+		obj->Collision();
+
+	// 충돌한 물체들의 밀림 처리
+	for (const auto& collider : Collider::allCollider)
+		collider->OnTrigger();
+
 	{
 		// 현재 Viewport
 		glViewport(0, 0, windowSize_W, windowSize_H);
-		Object::camera = &mainCamera;
+		Camera::mainCamera = &mainCamera;
 
-		maze_Object.Draw();
+		objectRender.Draw();
 	}
 
 	{
 		// Map ViewPort
 		glViewport(windowSize_W * 3 / 4, windowSize_H * 3 / 4, windowSize_W / 4, windowSize_H / 4);
-		Object::camera = &mapCamera;
+		Camera::mainCamera = &mapCamera;
 
-		maze_Object.Draw();
+		objectRender.Draw();
 	}
 
 
 	glutSwapBuffers();
-	Time_Duration = floor(difftime(time(NULL), Start_Time));
-	if (Time_Duration > 0)
-		glutTimerFunc(1000 / 60 - Time_Duration, FrameTimer, 1);
-	else
-		glutPostRedisplay();
-	Start_Time = time(NULL);
+	glutPostRedisplay();
 }
 
 
@@ -89,6 +126,7 @@ GLvoid Reshape(int w, int h)
 void KeyBoard(unsigned char key, int x, int y)	
 {
 	float speed = 0.01f;
+	Object::key = key;
 	switch (key)
 	{
 	case 'q':
@@ -115,25 +153,26 @@ void KeyBoard(unsigned char key, int x, int y)
 	case 'o':
 		mainCamera.isProjection = false;
 		mainCamera.isProjection_XY = true;
+		mainCamera.cameraPos.z = 2;
 		break;
 	case 'p':
 		mainCamera.isProjection = true;
 		mainCamera.isProjection_XY = false;
 		break;
 
-	case 'm':
-		maze_Object.isRandomScaleMoveing = !maze_Object.isRandomScaleMoveing;
-		break;
-
 	case 'y':
 		mainCamera.yRotate++;
-		mainCamera.cameraPos.x = 5 * sin(radians(mainCamera.yRotate));
-		mainCamera.cameraPos.z = 5 * cos(radians(mainCamera.yRotate));
+		mainCamera.cameraPos.x = 2 * sin(radians(mainCamera.yRotate));
+		mainCamera.cameraPos.z = 2 * cos(radians(mainCamera.yRotate));
 		break;
 	case 'Y':
 		mainCamera.yRotate--;
-		mainCamera.cameraPos.x = 5 * sin(radians(mainCamera.yRotate));
-		mainCamera.cameraPos.z = 5 * cos(radians(mainCamera.yRotate));
+		mainCamera.cameraPos.x = 2 * sin(radians(mainCamera.yRotate));
+		mainCamera.cameraPos.z = 2 * cos(radians(mainCamera.yRotate));
+		break;
+
+	case 'm':
+		maze_Object.isRandomScaleMoveing = !maze_Object.isRandomScaleMoveing;
 		break;
 
 	case 'r':
@@ -143,6 +182,9 @@ void KeyBoard(unsigned char key, int x, int y)
 		maze_Object.SetWall_YScale(2.0f);
 		break;
 	case 's':
+		player.isActive = true;
+		player.transform.worldPosition.x = 0;
+		player.transform.worldPosition.z = 0;
 		break;
 	}
 
@@ -151,7 +193,8 @@ void KeyBoard(unsigned char key, int x, int y)
 
 void SpecialKeyBoard(int key, int x, int y)
 {
-	float speed = 0.01f;
+	Object::specialKey = key;
+	
 	switch (key)
 	{
 	case GLUT_KEY_F1:
@@ -159,18 +202,6 @@ void SpecialKeyBoard(int key, int x, int y)
 		if (isFullScreen)
 			glutLeaveFullScreen();
 		isFullScreen = !isFullScreen;
-		break;
-	case GLUT_KEY_LEFT:
-		player.transform.worldPosition.x -= speed;
-		break;
-	case GLUT_KEY_RIGHT:
-		player.transform.worldPosition.x += speed;
-		break;
-	case GLUT_KEY_UP:
-		player.transform.worldPosition.z += speed;
-		break;
-	case GLUT_KEY_DOWN:
-		player.transform.worldPosition.z -= speed;
 		break;
 	}
 }
@@ -200,12 +231,4 @@ void Motion(int x, int y)
 
 void InitMain() 
 {
-	windowColor.R = windowColor.G = windowColor.B = 0;
-
-	mainCamera.isProjection = true;
-
-	mapCamera.isProjection_XZ = true;
-
-	maze_Object.Init();
-	maze_Object.isActive = true;
 }

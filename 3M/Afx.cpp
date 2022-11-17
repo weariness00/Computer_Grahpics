@@ -6,13 +6,12 @@ GLuint fragmentShader; //--- 프래그먼트 세이더 객체
 
 char default_Cube[] = "Cube.obj";
 
-int windowSize_W = 1600;
+int windowSize_W = 900;
 int windowSize_H = 900;
 
 bool isFullScreen = false;
 bool isOnTimer = false;
 
-time_t Start_Time;
 int Time_Duration;
 
 float PI = 3.14159265;
@@ -155,7 +154,6 @@ vec3 operator/ (const vec3 my, const float other)
 	return result;
 }
 
-
 bool operator== (const vec3 my, const float other)
 {
 	if (my.x != other) return false;
@@ -176,6 +174,15 @@ float DistanceVec3(const vec3 my, const vec3 other)
 		abs(pow(my.y - other.y, 2)) +
 		abs(pow(my.z - other.z, 2))
 	);
+}
+
+float RandomFloat(float first, float second)
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<GLclampf> randomFloat(first, second);
+
+	return randomFloat(gen);
 }
 
 #pragma region Defualt_Funtion
@@ -279,6 +286,7 @@ void ReadObj(char* fileName, ObjectBlock& block)
 
 	//--- 1. 전체 버텍스 개수 및 삼각형 개수 세기
 	char count[100];
+	char lineHeader[200];
 	int vertexNum = 0;
 	int faceNum = 0;
 	while (!feof(obj)) {
@@ -293,22 +301,58 @@ void ReadObj(char* fileName, ObjectBlock& block)
 	//--- 2. 메모리 할당'
 	block.vertIndex = 0;
 	block.faceIndex = 0;
-	block.vertex = new vec3[vertexNum];
+	//block.vertex = new vec3[vertexNum];
 	block.face = new Face[faceNum];
 	unsigned short faces[3] = {};
 
 	//--- 3. 할당된 메모리에 각 버텍스, 페이스 정보 입력
 	obj = fopen(fileName, "r");
 	while (!feof(obj)) {
-		fscanf(obj, "%s", count);
-		if (count[0] == 'v' && count[1] == '\0') {
-			fscanf(obj, "%f %f %f",
-				&block.vertex[block.vertIndex].x,
-				&block.vertex[block.vertIndex].y,
-				&block.vertex[block.vertIndex].z);
-			block.vertIndex++;
+		fscanf(obj, "%s", lineHeader);
+		//if (count[0] == 'v' && count[1] == '\0') {
+		//	fscanf(obj, "%f %f %f",
+		//		&block.vertex[block.vertIndex].x,
+		//		&block.vertex[block.vertIndex].y,
+		//		&block.vertex[block.vertIndex].z);
+		//	block.vertIndex++;
+		//}
+		if (strcmp(lineHeader, "v") == 0) {
+			glm::vec3 vertex;
+			fscanf(obj, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
+			block.vertices.push_back(vertex);
 		}
-		else if (count[0] == 'f' && count[1] == '\0') {
+		//else if (strcmp(lineHeader, "vt") == 0) {
+		//	vec2 uv;
+		//	fscanf(obj, "%f %f\n", &uv.x, &uv.y);
+		//	block.vertices_uvs.push_back(uv);
+		//}
+		//else if (strcmp(lineHeader, "vn") == 0) {
+		//	vec3 normal;
+		//	fscanf(obj, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
+		//	block.vertices_normals.push_back(normal);
+		//}
+		//else if (strcmp(lineHeader, "f") == 0) {
+		//	std::string vertex1, vertex2, vertex3;
+		//	unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+		//	int matches = fscanf(obj, "%d/%d/%d %d/%d/%d %d/%d/%d\n", 
+		//		&vertexIndex[0], &uvIndex[0], &normalIndex[0],
+		//		&vertexIndex[1], &uvIndex[1], &normalIndex[1], 
+		//		&vertexIndex[2], &uvIndex[2], &normalIndex[2]);
+		//	if (matches != 9) {
+		//		printf("File can't be read by our simple parser : ( Try exporting with other options\n");
+		//		return;
+		//	}
+		//	block.vertexIndices.push_back(vertexIndex[0] - 1);
+		//	block.vertexIndices.push_back(vertexIndex[1] - 1);
+		//	block.vertexIndices.push_back(vertexIndex[2] - 1);
+		//	block.uvIndices.push_back(uvIndex[0] - 1);
+		//	block.uvIndices.push_back(uvIndex[1] - 1);
+		//	block.uvIndices.push_back(uvIndex[2] - 1);
+		//	block.normalIndices.push_back(normalIndex[0] - 1);
+		//	block.normalIndices.push_back(normalIndex[1] - 1);
+		//	block.normalIndices.push_back(normalIndex[2] - 1);
+		//}
+		else if (strcmp(lineHeader, "f") == 0) {
 
 			unsigned short vt;
 			unsigned short vn;
@@ -326,7 +370,7 @@ void ReadObj(char* fileName, ObjectBlock& block)
 			block.faceIndex++;	
 		}
 	}
-	fclose(obj);
+	//fclose(obj);	// Player 불러올때 에러 나서 잠시 꺼둠 이유는 모름
 }
 
 #pragma endregion

@@ -1,29 +1,42 @@
 #pragma once
 
-#include "Transform.h"
+#include "Camera.h"
 
 class Collider {
+public:
+	static list<Collider*> allCollider;
+	static bool isPrint;
+
 public:
 	Collider();
 	~Collider();
 	
 public:
 	void InitTransform(Transform& t);
+	void SetBox(const vector<vec3> box);
+	void CheckCollision();
+	void OnTrigger();
 
 public:
-	//bool OnMouseCollide(Vector2 mousePos);
-	//bool WindowColider();
-	//bool OnCollide(Vector2 other[]);
-	//bool OnCollide(Collider other);
-	//void SetCollider(Vector2 dot[2]);
+	void GetBox();
+	bool Collide_XZ(Collider& other);
+	bool Collide_XY(Collider& other);
+
+public:
+	string tag;
+	Transform* transform;
+
+	vec3 rDistance;
 
 public:
 	bool isCollide;
+	bool isTrigger;
 	bool isMouseCollide;
 	bool isWindowCollide;
 
-private:
-	Vector2 Collider_Box[2];
+	list<Collider*> onCollideList;
 
-	Transform* transform;
+private:
+	vec3 colliderBox[2];
+	vec4 modelbox[2];
 };

@@ -32,8 +32,6 @@ void GL_Maze::Init()
 	{
 		for (int x = 0; x < wall_number.x; x++)
 		{
-			wall_Object[y][x].Init();
-			wall_Object[y][x].color.SetRandomColor();
 			wall_Object[y][x].transform.worldPosition.x = x - wall_number.x / 2;
 			wall_Object[y][x].transform.worldPosition.z = y - wall_number.y / 2;
 
@@ -49,11 +47,8 @@ void GL_Maze::Init()
 	}
 }
 
-void GL_Maze::Draw()
+void GL_Maze::Update()
 {
-	if (!isActive)
-		return;
-
 	RandomMovingScaleAnimaiton();
 
 	for (int y = 0; y < wall_number.y; y++)
@@ -64,7 +59,6 @@ void GL_Maze::Draw()
 			wall_Object[y][x].transform.localPosition = transform.worldPosition;
 			wall_Object[y][x].transform.localRotation = transform.worldRotation;
 			wall_Object[y][x].transform.localScale = transform.worldScale;
-			wall_Object[y][x].Draw();
 		}
 	}
 }

@@ -1,16 +1,19 @@
 #pragma once
-#include "Object.h"
 #include "Collider.h"
+#include "Render.h"
 
 class Cube :public Object
 {
+public:
+	static ObjectBlock* cube_Block;
+
 public:
 	Cube();
 	~Cube();
 
 public:
+	void Update();
 	void Init();
-	void Draw();
 
 private:
 	void MoveMent();
@@ -19,8 +22,6 @@ public:
 	Collider collider;
 
 	float yScaleSpeed = 0;
-public:
-	static ObjectBlock* cube_Block;
 };
 
 

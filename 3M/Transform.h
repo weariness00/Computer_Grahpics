@@ -11,10 +11,10 @@ public:
 	void Update();
 	void SetScale(); // 랜덤 스케일
 	void SetRandomRotate();
-	void LookAt(float speed);	// 바라보는 방향에서 pos 만큼 이동
-	
+
 	void Info();
 	void ReSet();
+
 public:
 	vec3 worldPosition;
 	vec3 localPosition;
@@ -27,4 +27,6 @@ public:
 
 	vec3 worldPivot;
 	vec3 localPivot;
+
+	mat4 model;
 };

@@ -1,7 +1,10 @@
 #include "Camera.h"
 
+Camera* Camera::mainCamera = nullptr;
+
 Camera::Camera()
 {
+	yRotate = 0;
 }
 
 Camera::~Camera()
@@ -13,14 +16,14 @@ void Camera::Draw()
 	mat4 view = mat4(1.0f);
 	mat4 projection = mat4(1.0f);
 	float size = 2.0f;
-	if (isProjection_XZ)	// 직각 투영
+	if (isProjection_XY)	// 직각 투영
 	{
 		projection = ortho(-size, size, -size, size, -size, size);
-		projection = rotate(projection, radians(85.0f), vec3(1, 0, 0));
 	}
-	else if (isProjection_XY)
+	else if (isProjection_XZ)
 	{
 		projection = ortho(-size, size, -size, size, -size, size);
+		projection = rotate(projection, radians(90.0f), vec3(1, 0, 0));
 	}
 	else if(isProjection)
 	{
@@ -32,11 +35,13 @@ void Camera::Draw()
 		projection = translate(projection, transform.localPosition);
 		projection = rotate(projection, radians(transform.localRotation.x), vec3(1.0, 0.0, 0.0));
 		projection = rotate(projection, radians(transform.localRotation.y), vec3(0.0, 1.0, 0.0));
+		projection = rotate(projection, radians(transform.localRotation.z), vec3(0.0, 0.0, 1.0));
 
 		projection = translate(projection, transform.worldPivot);
 		projection = translate(projection, transform.worldPosition);
 		projection = rotate(projection, radians(transform.worldRotation.x), vec3(1.0, 0.0, 0.0));
 		projection = rotate(projection, radians(transform.worldRotation.y), vec3(0.0, 1.0, 0.0));
+		projection = rotate(projection, radians(transform.worldRotation.z), vec3(0.0, 0.0, 1.0));
 	}
 	unsigned int viewLocation = glGetUniformLocation(s_program, "viewTransform"); //--- 뷰잉 변환 설정
 	unsigned int projectionLocation = glGetUniformLocation(s_program, "projectionTransform");

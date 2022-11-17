@@ -4,6 +4,8 @@ ObjectBlock* Cube::cube_Block = nullptr;
 
 Cube::Cube()
 {
+	name = "Cube";
+
 	if (cube_Block == nullptr)
 	{
 		cube_Block = new ObjectBlock;
@@ -12,34 +14,30 @@ Cube::Cube()
 
 	block.vertIndex = cube_Block->vertIndex;
 	block.faceIndex = cube_Block->faceIndex;
-	block.vertex = cube_Block->vertex;
+	block.vertices = cube_Block->vertices;
 	block.face = cube_Block->face;
-
-	isActive = true;
 }
 
 Cube::~Cube()
 {
 }
 
+void Cube::Update()
+{
+	MoveMent();
+	SetMatrix();
+}
 
 void Cube::Init()
 {
 	Object::Init();
-}
 
-void Cube::Draw()
-{
-	if (!isActive)
-		return;
+	color.SetRandomColor();
+	collider.InitTransform(transform);
+	collider.SetBox(block.vertices);
+	collider.tag = "Object";
 
-	MoveMent();
-
-	Object::SetMatrix();
-
-	//glPointSize(5.0f);
-	//glDrawArrays(GL_POINTS, 0, block.vertIndex);
-	glDrawElements(GL_TRIANGLES, block.faceIndex * 3, GL_UNSIGNED_SHORT, 0);
+	Render::mainRender->AddObject(this);
 }
 
 void Cube::MoveMent()
@@ -47,4 +45,3 @@ void Cube::MoveMent()
 	transform.worldPosition += worldSpeed;
 	transform.worldRotation += worldRotateSpeed;
 }
-

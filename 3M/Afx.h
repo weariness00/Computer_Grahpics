@@ -1,13 +1,16 @@
 #pragma once
 #include <iostream>
 #include <random>
+#include <vector>
 #include <list>
+#include <map>
 #include <cmath>
-#include <ctime>	
 #include <string>
 #include <fstream>
 #include <stdlib.h>
 #include <stdio.h>
+#include "FrameTime.h"
+
 #include <gl/glew.h>
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
@@ -31,7 +34,6 @@ extern int windowSize_H;
 
 extern bool isFullScreen;
 
-extern time_t Start_Time;
 extern int Time_Duration;
 
 extern float PI;
@@ -59,7 +61,10 @@ typedef struct Face {
 }Face;
 
 typedef struct ObjectBlock {
-	vec3* vertex;
+	vector< unsigned int > vertexIndices, uvIndices, normalIndices;
+	vector<vec3> vertices;
+	vector<vec2> vertices_uvs;
+	vector<vec3> vertices_normals;
 	Face* face;
 	int vertIndex;
 	int faceIndex;
@@ -89,6 +94,7 @@ extern Vector2 window_RealPos;
 extern Vector2 StartMouse;
 
 float DistanceVec3(const vec3 my, const vec3 other);
+float RandomFloat(float first, float second);
 
 char* filetobuf(const char* file);
 void make_vertexShaders();

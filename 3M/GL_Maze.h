@@ -8,7 +8,7 @@ public:
 
 public:
 	void Init();
-	void Draw();
+	void Update();
 
 public:
 	void MakeMaze();
