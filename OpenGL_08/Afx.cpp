@@ -12,7 +12,6 @@ int windowSize_H = 900;
 bool isFullScreen = false;
 bool isOnTimer = false;
 
-time_t Start_Time;
 int Time_Duration;
 
 float PI = 3.14159265;

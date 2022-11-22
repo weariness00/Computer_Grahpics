@@ -13,9 +13,6 @@ GL_Cube::~GL_Cube()
 
 void GL_Cube::Update()
 {
-	if (!isActive)
-		return;
-
 	MoveMent();
 	Animaition();
 
@@ -111,6 +108,12 @@ void GL_Cube::ReSet()
 
 void GL_Cube::Animaition()
 {
+	if (planObjet[Cube_Down].transform.worldPosition.x >= 1)
+	{
+		planObjet[Cube_Down].transform.worldPosition.x = 1;
+		planObjet[Cube_Down].worldSpeed.x = 0;
+	}
+
 	if (planObjet[Cube_Forward].transform.worldRotation.x > 180)
 	{
 		planObjet[Cube_Forward].worldRotateSpeed.x = 0;
@@ -142,6 +145,6 @@ void GL_Cube::Animaition()
 
 void GL_Cube::MoveMent()
 {
-	transform.worldPosition += worldSpeed;
-	transform.worldRotation = (transform.worldRotation + rotateSpeed);
+	transform.worldPosition += worldSpeed * FrameTime::oneFrame;
+	transform.worldRotation = (transform.worldRotation + rotateSpeed) * FrameTime::oneFrame;
 }

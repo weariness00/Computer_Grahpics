@@ -24,9 +24,6 @@ Plan::~Plan()
 
 void Plan::Update()
 {
-	if (!isActive)
-		return;
-	 
 	MoveMent();
 
 	SetMatrix();
@@ -34,7 +31,7 @@ void Plan::Update()
 
 void Plan::MoveMent()
 {
-	transform.worldPosition += worldSpeed;
+	transform.worldPosition += worldSpeed * FrameTime::oneFrame;
 	transform.worldRotation = (transform.worldRotation + worldRotateSpeed);
 }
 

@@ -4,11 +4,12 @@
 #include <list>
 #include <map>
 #include <cmath>
-#include <ctime>	
 #include <string>
 #include <fstream>
 #include <stdlib.h>
 #include <stdio.h>
+#include "FrameTime.h"
+
 #include <gl/glew.h>
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
@@ -32,7 +33,6 @@ extern int windowSize_H;
 
 extern bool isFullScreen;
 
-extern time_t Start_Time;
 extern int Time_Duration;
 
 extern float PI;

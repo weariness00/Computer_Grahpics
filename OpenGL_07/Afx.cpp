@@ -177,6 +177,15 @@ float DistanceVec3(const vec3 my, const vec3 other)
 	);
 }
 
+float RandomFloat(float frist, float second)
+{
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<GLclampf> rf(frist, second);
+
+	return rf(gen);
+}
+
 #pragma region Defualt_Funtion
 
 char* filetobuf(const char* file)

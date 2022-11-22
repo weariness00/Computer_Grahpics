@@ -26,6 +26,7 @@ void Render::Draw()
 			if (!obj->isActive)
 				continue;
 
+			//obj->Info();
 			obj->ObjcetDraw();
 		}
 	}

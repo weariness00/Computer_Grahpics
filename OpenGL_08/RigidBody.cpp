@@ -2,7 +2,7 @@
 
 RigidBody::RigidBody(Transform& transform) : transform(&transform)
 {
-	velocity = vec3(0,-0.01,0);
+	velocity = vec3(0,-1,0);
 	mass = 1;
 }
 

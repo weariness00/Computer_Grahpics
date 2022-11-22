@@ -15,6 +15,8 @@ Color windowColor;
 Camera mainCamera;
 
 Render objectRender;
+list<Object*> Object::allObject;
+
 
 bool is_Polygon = false;
 bool is_CullFace = false;
@@ -23,11 +25,13 @@ bool isMouseLeft = false;
 
 int ballCount = 0;
 
+GL_Cube wall_Objcet;
+Cube cube_Object[3];
+Sphere sphere_Object[5];
+
+
 int main(int argc, char** argv)
 {
-	GL_Cube wall_Objcet;
-	Cube cube_Object[3];
-	Sphere sphere_Object[5];
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -35,6 +39,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(windowSize_W, windowSize_H);
 	glutCreateWindow("Example1");
 	
+	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
 
 	//--- GLEW 초기화하기
@@ -43,6 +48,9 @@ int main(int argc, char** argv)
 
 	InitShader();
 	{
+		FrameTime::currentTime = clock();
+		cout << FrameTime::currentTime << endl;
+
 		windowColor.R = windowColor.G = windowColor.B = 0;
 
 		Camera::mainCamera = &mainCamera;
@@ -62,9 +70,10 @@ int main(int argc, char** argv)
 		for (int i = 0; i < 3; i++)
 		{
 			cube_Object[i].transform.worldScale *= 0.05 * (i + 1);
+			cube_Object[i].transform.worldScale += 0.1;
 			cube_Object[i].transform.worldPosition.x = (i + 1) * 0.1;
 			cube_Object[i].transform.worldPosition.y = -(i + 1) * 0.1;
-			cube_Object[i].transform.worldPosition.z = -(i + 1) * 0.1;
+			cube_Object[i].transform.worldPosition.z = -(i + 1) * 0.2 + 0.3;
 			cube_Object[i].color.SetRandomColor();
 		}
 	}
@@ -84,7 +93,11 @@ void drawScene()
 	
 	// 모든 오브젝트 업데이트
 	for (const auto& obj : Object::allObject)
+	{
+		if (!obj->isActive)
+			continue;
 		obj->Update();
+	}
 
 	// 모든 콜라이더 위치 업데이트
 	for (const auto& collider : Collider::allCollider)
@@ -100,11 +113,11 @@ void drawScene()
 
 	objectRender.Draw();
 
+	FrameTime::oneFrame = (clock() - FrameTime::currentTime) / 1000.0f;
+	FrameTime::currentTime += FrameTime::oneFrame * 1000.0f;
+
 	glutSwapBuffers();
 	glutPostRedisplay();
-	//Time_Duration = floor(difftime(time(NULL), Start_Time));
-	//glutTimerFunc(0, FrameTimer, 1);
-	//Start_Time = time(NULL);
 }
 
 GLvoid Reshape(int w, int h)
@@ -164,8 +177,15 @@ void KeyBoard(unsigned char key, int x, int y)
 	case 'Y':
 		mainCamera.yRotate--;
 		mainCamera.cameraPos.x = 2 * sin(radians(mainCamera.yRotate));
-		mainCamera.cameraPos.z = 2 * cos(radians(mainCamera.yRotate));
+		mainCamera.cameraPos.z = 2 * cos(radians(mainCamera.yRotate)) ;
 		break;
+
+	case 'f':
+		wall_Objcet.planObjet[Cube_Down].worldSpeed.x = 1;
+		//wall_Objcet.planObjet[Cube_Down].isActive = false;
+		//wall_Objcet.collider[0].isCollide = false;
+		break;
+
 
 	case 'b':
 		if (ballCount >= 5)

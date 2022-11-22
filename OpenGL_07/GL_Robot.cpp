@@ -65,10 +65,9 @@ void GL_Robot::Draw()
 		return;
 
 	MoveMent();
-	OnAnimation();
 
 	if (transform.worldPosition.y > 0)
-		transform.worldPosition.y -= 0.01;
+		transform.worldPosition.y -= 0.004;
 	else
 		transform.worldPosition.y = 0;
 
@@ -136,15 +135,15 @@ void GL_Robot::OnAnimation()
 
 	movingRotateValue += movingRotateSpeed;
 
-	body_Object[Robot_LeftArm].transform.worldRotation.x += movingRotateSpeed;
-	body_Object[Robot_LeftArm].transform.worldPosition.z += -movingRotateSpeed * 0.01f;
-	body_Object[Robot_RightArm].transform.worldRotation.x += -movingRotateSpeed;
-	body_Object[Robot_RightArm].transform.worldPosition.z += movingRotateSpeed * 0.01f;	
+	body_Object[Robot_LeftArm].transform.worldRotation.x = movingRotateValue;
+	body_Object[Robot_LeftArm].transform.worldPosition.z = -movingRotateValue * 0.01f;
+	body_Object[Robot_RightArm].transform.worldRotation.x = -movingRotateValue;
+	body_Object[Robot_RightArm].transform.worldPosition.z = movingRotateValue * 0.01f;
 
-	body_Object[Robot_LeftLeg].transform.worldRotation.x += -movingRotateSpeed;
-	body_Object[Robot_LeftLeg].transform.worldPosition.z += movingRotateSpeed * 0.01f;
-	body_Object[Robot_RightLef].transform.worldRotation.x += movingRotateSpeed;
-	body_Object[Robot_RightLef].transform.worldPosition.z += -movingRotateSpeed * 0.01f;
+	body_Object[Robot_LeftLeg].transform.worldRotation.x = -movingRotateValue;
+	body_Object[Robot_LeftLeg].transform.worldPosition.z = movingRotateValue * 0.01f;
+	body_Object[Robot_RightLef].transform.worldRotation.x = movingRotateValue;
+	body_Object[Robot_RightLef].transform.worldPosition.z = -movingRotateValue * 0.01f;
 }
 
 void GL_Robot::OnCollision(Collider& other)
@@ -152,7 +151,7 @@ void GL_Robot::OnCollision(Collider& other)
 	if (!collider.Collide_XZ(other))
 		return;
 
-	cout << "Ãæµ¹ : " << other.tag << endl;
+
 	if (other.tag == "Left")
 	{
 		transform.worldPosition.x += 0.9;
@@ -171,14 +170,11 @@ void GL_Robot::OnCollision(Collider& other)
 	}
 	else if (other.tag == "Obstacle")
 	{
-		if (transform.worldPosition.y < 0.05)
+		
+		if (transform.worldPosition.y < 0.13)
 		{
-			transform.worldPosition -= worldSpeed;
-			transform.worldPosition.y += worldSpeed.y;
-		}
-		else
-		{
-			transform.worldPosition.y += 0.005;
+			transform.worldPosition -= transform.worldPosition - prevPos;
+			transform.worldPosition.y += 0.001;
 		}
 
 	}
@@ -189,7 +185,7 @@ void GL_Robot::MoveMent()
 	if (!isMoveMent)
 		return;
 
-	if (transform.worldPosition.y >= 0.2)
+	if (transform.worldPosition.y >= 0.15)
 		worldSpeed.y = 0;
 
 	transform.worldPosition += worldSpeed;

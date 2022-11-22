@@ -13,7 +13,7 @@ void Sphere::Init()
 {
 	isActive = false;
 
-	transform.worldScale *= 0.05;
+	transform.worldScale *= 0.1;
 
 	obj = gluNewQuadric();
 	gluQuadricDrawStyle(obj, GLU_FILL);
@@ -34,7 +34,7 @@ void Sphere::Update()
 		return;
 
 	MoveMent();
-	transform.worldPosition += rigidBody.UpdateRigid();
+	transform.worldPosition += rigidBody.UpdateRigid() * FrameTime::oneFrame;
 
 	SetMatrix();
 }
@@ -60,7 +60,7 @@ void Sphere::Collision()
 	{
 		if (other->tag == "Wall_X" || other->tag == "Wall_Y")
 		{
-			transform.worldPosition.y -= rigidBody.UpdateRigid().y;
+			transform.worldPosition.y -= rigidBody.UpdateRigid().y * FrameTime::oneFrame;
 			rigidBody.velocity = -rigidBody.velocity;
 		}
 	}

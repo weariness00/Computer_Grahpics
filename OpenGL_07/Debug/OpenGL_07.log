@@ -1,2 +1,42 @@
-﻿  Object.cpp
+﻿  GL_Robot.cpp
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\GL_Robot.cpp(17,31): warning C4305: '-=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\GL_Robot.cpp(70,37): warning C4305: '-=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\GL_Robot.cpp(92,31): warning C4305: '-=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\GL_Robot.cpp(157,35): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\GL_Robot.cpp(161,35): warning C4305: '-=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\GL_Robot.cpp(165,35): warning C4305: '-=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\GL_Robot.cpp(169,35): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
+D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\GL_Robot.cpp(177,38): warning C4305: '+=': 'double'에서 'T'(으)로 잘립니다.
+          with
+          [
+              T=float
+          ]
   OpenGL_07.vcxproj -> D:\GItData\DongWoo_Computer_Grahpics\OpenGL_07\Debug\OpenGL_07.exe

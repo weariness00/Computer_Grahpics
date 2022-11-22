@@ -128,11 +128,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\3M\Render.cpp" />
     <ClCompile Include="Afx.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="FrameTime.cpp" />
     <ClCompile Include="GL_Cube.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -143,11 +145,13 @@
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\3M\Render.h" />
     <ClInclude Include="Afx.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Cube.h" />
+    <ClInclude Include="FrameTime.h" />
     <ClInclude Include="GL_Cube.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Plan.h" />

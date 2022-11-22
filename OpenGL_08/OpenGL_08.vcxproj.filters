@@ -60,6 +60,12 @@
     <ClCompile Include="Transform.cpp">
       <Filter>소스 파일\FrameWork</Filter>
     </ClCompile>
+    <ClCompile Include="FrameTime.cpp">
+      <Filter>소스 파일\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3M\Render.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cube.h">
@@ -97,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>헤더 파일\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameTime.h">
+      <Filter>헤더 파일\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3M\Render.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

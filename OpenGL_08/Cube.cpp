@@ -26,12 +26,9 @@ Cube::~Cube()
 
 void Cube::Update()
 {
-	if (!isActive)
-		return;
-
 	MoveMent();
 	isRigidXY = !isRigidXY;
-	transform.worldPosition += rigidBody.UpdateRigid();
+	transform.worldPosition += rigidBody.UpdateRigid() * FrameTime::oneFrame;
 	SetMatrix();
 }
 
@@ -63,11 +60,11 @@ void Cube::Collision()
 	{
 		if (other->tag == "Wall_X")
 		{
-			transform.worldPosition.x -= rigidBody.UpdateRigid().x;
+			transform.worldPosition.x -= rigidBody.UpdateRigid().x * FrameTime::oneFrame;
 		}
 		else if (other->tag == "Wall_Y")
 		{
-			transform.worldPosition.y -= rigidBody.UpdateRigid().y;
+			transform.worldPosition.y -= rigidBody.UpdateRigid().y * FrameTime::oneFrame;
 		}
 	}
 

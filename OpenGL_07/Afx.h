@@ -89,6 +89,7 @@ extern Vector2 window_RealPos;
 extern Vector2 StartMouse;
 
 float DistanceVec3(const vec3 my, const vec3 other);
+float RandomFloat(float frist, float second);
 
 char* filetobuf(const char* file);
 void make_vertexShaders();

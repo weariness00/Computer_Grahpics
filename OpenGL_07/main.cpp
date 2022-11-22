@@ -159,7 +159,7 @@ void KeyBoard(unsigned char key, int x, int y)
 		break;
 
 	case 'j':
-		robot_Object.worldSpeed.y = 0.02;
+		robot_Object.worldSpeed.y = 0.005;
 		break;
 		
 	}
@@ -172,33 +172,41 @@ void SpecialKeyBoard(int key, int x, int y)
 	switch (key)
 	{
 	case GLUT_KEY_LEFT:
-		robot_Object.worldSpeed.x = 0;
-		robot_Object.worldSpeed.z = 0;
-		robot_Object.worldSpeed.x -= 0.01;
+		robot_Object.prevPos = vec3(robot_Object.transform.worldPosition);
+		robot_Object.transform.worldPosition.x -= 0.01;
 		robot_Object.transform.worldRotation.y = -90;
 		robot_Object.movingRotateSpeed = 1;
+		robot_Object.OnAnimation();
 		break;
 	case GLUT_KEY_RIGHT:
-		robot_Object.worldSpeed.x = 0;
-		robot_Object.worldSpeed.z = 0;
-		robot_Object.worldSpeed.x += 0.01;
+		robot_Object.prevPos = vec3(robot_Object.transform.worldPosition);
+		robot_Object.transform.worldPosition.x += 0.01;
 		robot_Object.transform.worldRotation.y = 90;
-		robot_Object.movingRotateSpeed = 1;
+		robot_Object.movingRotateSpeed = -1;
+		robot_Object.OnAnimation();
 		break;
 
 	case GLUT_KEY_DOWN:
-		robot_Object.worldSpeed.x = 0;
-		robot_Object.worldSpeed.z = 0;
-		robot_Object.worldSpeed.z += 0.01;
+		robot_Object.prevPos = vec3(robot_Object.transform.worldPosition);
+		robot_Object.transform.worldPosition.z += 0.01;
 		robot_Object.transform.worldRotation.y = 0;
 		robot_Object.movingRotateSpeed = 1;
+		robot_Object.OnAnimation();
+		//robot_Object.worldSpeed.z += 0.01;
+		//robot_Object.transform.worldRotation.y = 0;
+		//robot_Object.movingRotateSpeed = 1;
 		break;
 	case GLUT_KEY_UP:
-		robot_Object.worldSpeed.x = 0;
-		robot_Object.worldSpeed.z = 0;
-		robot_Object.worldSpeed.z -= 0.01;
+		robot_Object.prevPos = vec3(robot_Object.transform.worldPosition);
+		robot_Object.transform.worldPosition.z -= 0.01;
 		robot_Object.transform.worldRotation.y = 180;
-		robot_Object.movingRotateSpeed = 1;
+		robot_Object.movingRotateSpeed = -1;
+		robot_Object.OnAnimation();
+		//robot_Object.worldSpeed.x = 0;
+		//robot_Object.worldSpeed.z = 0;
+		//robot_Object.worldSpeed.z -= 0.01;
+		//robot_Object.transform.worldRotation.y = 180;
+		//robot_Object.movingRotateSpeed = 1;
 		break;
 	default:
 		break;
@@ -246,8 +254,8 @@ void InitMain()
 	obstacle_Objcet.transform.worldScale.x *= 1.5;
 	obstacle_Objcet.transform.worldScale.y *= 1.5;
 	obstacle_Objcet.transform.worldPosition.y = -0.4f;
-	obstacle_Objcet.transform.worldPosition.x = 0.3f;
-	obstacle_Objcet.transform.worldPosition.z = 0.3f;
+	obstacle_Objcet.transform.worldPosition.x = RandomFloat(-0.3, 0.3);
+	obstacle_Objcet.transform.worldPosition.z = RandomFloat(-0.3, 0.3);
 	obstacle_Collider.InitTransform(obstacle_Objcet.transform);
 	vec3 box[2] = { vec3(0.5,0,0.5), vec3(-0.5,0, -0.5) };
 	obstacle_Collider.SetBox(box,2);

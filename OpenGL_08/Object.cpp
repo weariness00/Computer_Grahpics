@@ -1,7 +1,7 @@
 #include "Object.h"
 
 int Object::ID_Count = 0;
-list<Object*> Object::allObject;
+//list<Object*> Object::allObject;
 int Object::modelLocation;
 int Object::vColorLocation;
 

@@ -37,6 +37,8 @@ public:
 
 	bool isMoveMent;
 
+	vec3 prevPos;
+
 public:
 	vec3 worldSpeed;
 
