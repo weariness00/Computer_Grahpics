@@ -65,7 +65,11 @@ typedef struct ObjectBlock {
 	vector<vec3> vertices;
 	vector<vec2> vertices_uvs;
 	vector<vec3> vertices_normals;
-	Face* face;
+	vector<Face>* fGroups;
+	vector<Face> face;
+	//Face* face;
+	vec3 max, min;
+	int groupIndex;
 	int vertIndex;
 	int faceIndex;
 }ObjectBlock;

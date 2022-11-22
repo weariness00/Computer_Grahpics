@@ -13,16 +13,18 @@ public:
 	~Player();
 
 public:
+	void Enable();
+	void Disable();
 	void Init();
 	void Update();
 	void Handle_Evnet(unsigned char key);
 	void Handle_Evnet(int specialKey);
+	void Collision();
 
 private:
 
 public:
-
-	//Collider collider;
+	Collider collider;
 
 	float speed = 1;
 private:

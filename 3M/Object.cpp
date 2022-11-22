@@ -18,6 +18,8 @@ Object::Object(): transform(), color()
 	worldSpeed = localSpeed = vec3(0);
 	worldRotateSpeed = localRotateSpeed = vec3(0);
 
+	isDraw = true;
+
 	allObject.push_back(this);
 }
 
@@ -42,19 +44,21 @@ void Object::Init()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * block.vertices.size(), &block.vertices[0], GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VAO_Index); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vec3) * block.faceIndex, block.face, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vec3) * block.face.size(), &block.face[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), 0);
 	glEnableVertexAttribArray(0);
 }
 
-void Object::ObjcetDraw()
+void Object::ObjectDraw()
 {
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, value_ptr(transform.model));
 	glUniform4f(vColorLocation, color.R, color.G, color.B, color.A);
 
 	glBindVertexArray(VAO);
 
-	glDrawElements(GL_TRIANGLES, block.faceIndex * 3, GL_UNSIGNED_SHORT, 0);
+	//glPointSize(5.0f);
+	//glDrawArrays(GL_POINTS, 0, block.vertices.size());
+	glDrawElements(GL_TRIANGLES, block.face.size() * 3, GL_UNSIGNED_SHORT, 0);
 }
 
 
@@ -63,9 +67,19 @@ void Object::Collision()
 
 }
 
+void Object::SetActive(bool value)
+{
+	if (this->isActive == false && value == true)
+		this->Enable();
+	else if (this->isActive == true && value == false)
+		this->Disable();
+
+	this->isActive = value;
+}
+
 void Object::Info()
 {
-	cout << name << " : " << id << endl;
+	cout << id << " : " << name << endl;
 }
 
 mat4& Object::SetMatrix()

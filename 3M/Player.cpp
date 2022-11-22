@@ -17,48 +17,107 @@ Player::Player()
 	block.vertices = player_Block->vertices;
 	block.face = player_Block->face;
 
-	transform.localScale *= 0.01;
+	collider.object = this;
+	//collider.SetBox_OBB(vec3(10,50,10));
+	vec3 box[2] = { vec3(0), vec3(player_Block->max) };
+	collider.SetBox(box,2);
+	collider.isCollide = false;
+	collider.tag = "Player";
 }
 
 Player::~Player()
 {
 }
 
+void Player::Enable()
+{
+	this->collider.isCollide = true;
+}
+
+void Player::Disable()
+{
+	this->collider.isCollide = false;
+}
+
 void Player::Init()
 {
+	SetActive(false);
+	transform.localRotation.y = 180;
+	transform.localPivot.y = -1;
+
+	transform.worldScale *= 0.05;
+	transform.worldPosition.y = 1;
+
 	Object::Init();
-	Render::mainRender->AddObject(this);
+	Render::objectRenedr->AddObject(this);
 }
 
 void Player::Update()
 {
 	Handle_Evnet(key);
 	Handle_Evnet(specialKey);
-
-	SetMatrix();
 }
 
 void Player::Handle_Evnet(unsigned char key)
 {
+	float frameSpeed = speed * FrameTime::oneFrame;
+	float x = transform.worldRotation.x;
+	transform.worldRotation.x -= x;
+	switch (key)
+	{
+	case 'a':
+		transform.worldRotation.y += 90;
+		transform.LookAt(speed);
+		transform.worldRotation.y -= 90;
+		break;
+	case 'd':
+		transform.worldRotation.y -= 90;
+		transform.LookAt(speed);
+		transform.worldRotation.y += 90;
+		break;
+	case 'w':
+		transform.LookAt(speed);
+		break;
+	case 's':
+		transform.LookAt(-speed);
+		break;
+	}
+	transform.worldRotation.x += x;
 }
 
 void Player::Handle_Evnet(int specialKey)
 {
 
-	float frameSpeed = speed * FrameTime::oneFrame;
-	switch (specialKey)
+}
+
+void Player::Collision()
+{
+	if (!collider.isCollide)
+		return;
+
+	speed = 1;
+	for (auto& other : Collider::allCollider)
 	{
-	case GLUT_KEY_LEFT:
-		transform.worldPosition.x -= frameSpeed;
-		break;
-	case GLUT_KEY_RIGHT:
-		transform.worldPosition.x += frameSpeed;
-		break;
-	case GLUT_KEY_UP:
-		transform.worldPosition.z += frameSpeed;
-		break;
-	case GLUT_KEY_DOWN:
-		transform.worldPosition.z -= frameSpeed;
-		break;
+		if (other->object->id == this->id)
+			continue;
+
+		if (!other->isCollide)
+			continue;
+
+		if (!collider.Collide_XZ(*other))
+			continue;
+
+		speed = 0;
 	}
+
+	//for (auto& other : Collider::allCollider)
+	//{
+	//	if (other->object->id == this->id)
+	//		continue;
+
+	//	if (!this->collider.OBBCollision(this->collider, *other))
+	//		continue;
+
+	//	cout << other->tag << endl;
+	//}
 }

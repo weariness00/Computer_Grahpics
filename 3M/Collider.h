@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Camera.h"
+#include "Object.h"
 
 class Collider {
 public:
+	static ObjectBlock* box_Block;
 	static list<Collider*> allCollider;
 	static bool isPrint;
 
@@ -12,21 +13,22 @@ public:
 	~Collider();
 	
 public:
-	void InitTransform(Transform& t);
-	void SetBox(const vector<vec3> box);
-	void CheckCollision();
-	void OnTrigger();
+	void Init();
+	void DrawBox();
 
 public:
+	void SetBox(const vec3* box, int size);
 	void GetBox();
 	bool Collide_XZ(Collider& other);
-	bool Collide_XY(Collider& other);
+
+public:
+	void SetBox_OBB(vec3 d);
+	void GetBox_OBB();
+	bool OBBCollision(const Collider& a,const Collider& b);
 
 public:
 	string tag;
-	Transform* transform;
-
-	vec3 rDistance;
+	Object* object;
 
 public:
 	bool isCollide;
@@ -34,8 +36,20 @@ public:
 	bool isMouseCollide;
 	bool isWindowCollide;
 
-	list<Collider*> onCollideList;
+private:
+	Color color;
+	vec3 size;
 
+	vec3 axis[3]; // 중심점에서 right, up, front 벡터
+	float axisLen[3];
+	vec3 defaultAxis[3];
+
+	ObjectBlock cBlock;
+	GLuint VAO, VAO_Dot, VAO_Index;
+
+// 임시 변수들
+public:
+	vec3 rDistance;
 private:
 	vec3 colliderBox[2];
 	vec4 modelbox[2];

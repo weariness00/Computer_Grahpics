@@ -17,12 +17,11 @@ void GL_Maze::Init()
 {
 	random_device rd;
 	mt19937 gen(rd());
-	uniform_real_distribution<GLclampf> randomScale(0.1f, 10.0f);
+	//uniform_real_distribution<GLclampf> randomScale(0.1f, 1/transform.worldScale.x * 1.5);
+	uniform_real_distribution<GLclampf> randomScale(0.1f, 5);
 	uniform_int_distribution<int> randomScaleSpeed(0, 1 + 1);
 
-	transform.worldScale *= 0.1;
-
-	cin >> wall_number.x >> wall_number.y;
+	transform.worldScale *= 0.2;
 
 	wall_Object = new Cube*[wall_number.y];
 	for (int i = 0; i < wall_number.y; i++)
@@ -32,8 +31,8 @@ void GL_Maze::Init()
 	{
 		for (int x = 0; x < wall_number.x; x++)
 		{
-			wall_Object[y][x].transform.worldPosition.x = x - wall_number.x / 2;
-			wall_Object[y][x].transform.worldPosition.z = y - wall_number.y / 2;
+			wall_Object[y][x].transform.worldPosition.x = x - wall_number.x / 2 + 0.5;
+			wall_Object[y][x].transform.worldPosition.z = y - wall_number.y / 2 + 0.5;
 
 			float rScale_Y = randomScale(gen);
 			wall_Object[y][x].transform.worldScale.y = rScale_Y;
@@ -61,71 +60,142 @@ void GL_Maze::Update()
 			wall_Object[y][x].transform.localScale = transform.worldScale;
 		}
 	}
+
+	Handle_Evnet(key);
+	Handle_Evnet(specialKey);
+}
+
+void GL_Maze::Handle_Evnet(unsigned char key)
+{
+	switch (key)
+	{
+	case 'm':
+		isRandomScaleMoveing = !isRandomScaleMoveing;
+		break;
+
+	case '=':
+		scaleMovingSpeed++;
+		if (scaleMovingSpeed > 10)
+			scaleMovingSpeed = 10;
+		else if (scaleMovingSpeed < 0)
+			scaleMovingSpeed = 0;
+		else if (scaleMovingSpeed == 0)
+			scaleMovingSpeed++;
+		for (int y = 0; y < wall_number.y; y++) 
+		{
+			for (int x = 0; x < wall_number.x; x++)
+			{
+				if(wall_Object[y][x].yScaleSpeed >= 0)
+					wall_Object[y][x].yScaleSpeed = scaleMovingSpeed;
+				else if (wall_Object[y][x].yScaleSpeed < 0)
+					wall_Object[y][x].yScaleSpeed = -scaleMovingSpeed;
+			}
+		}
+		
+		break;
+	case '-':
+		scaleMovingSpeed--;
+		if (scaleMovingSpeed > 10)
+			scaleMovingSpeed = 10;
+		else if (scaleMovingSpeed < 0)
+			scaleMovingSpeed = 0;
+		else if (scaleMovingSpeed == 0)
+			scaleMovingSpeed++;
+		for (int y = 0; y < wall_number.y; y++)
+		{
+			for (int x = 0; x < wall_number.x; x++)
+			{
+				if (wall_Object[y][x].yScaleSpeed >= 0)
+					wall_Object[y][x].yScaleSpeed = -scaleMovingSpeed;
+				else if (wall_Object[y][x].yScaleSpeed < 0)
+					wall_Object[y][x].yScaleSpeed = scaleMovingSpeed;
+
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void GL_Maze::Handle_Evnet(int specialKey)
+{
+}
+
+void GL_Maze::ReSet()
+{
+	SetWall_YScale(2.0f);
+	isRandomScaleMoveing = false;
+	for (int y = 0; y < wall_number.y; y++)
+	{
+		for (int x = 0; x < wall_number.x; x++)
+		{
+			wall_Object[y][x].SetActive(true);
+		}
+	}
+
 }
 
 void GL_Maze::MakeMaze()
 {
 	random_device rd;
 	mt19937 gen(rd());
-	uniform_int_distribution<int> exitX(0, wall_number.x);
-	uniform_int_distribution<int> exitY(0, wall_number.y);
+	uniform_int_distribution<int> exitX(1, wall_number.x - 2);
+	uniform_int_distribution<int> exitY(1, wall_number.y - 2);
 	uniform_int_distribution<int> randomBool(0, 1 + 1);
+	int count = (wall_number.x + wall_number.y - 4) / 2;
+	uniform_int_distribution<int> randomCount(0, count - 1);
+
+	Position2* mazeDotPos = new Position2[count];
+	Position2 pivot_Maze = { wall_number.x / 2, wall_number.y / 2 };
 
 	for (int y = 0; y < wall_number.y; y++)
 		for (int x = 0; x < wall_number.x; x++)
-			wall_Object[y][x].isActive = true;
-
-	Position2 mazeExit = {0,0};
+			wall_Object[y][x].SetActive(true);
+	
+	Position2 mazeExit = { 1,1 };
 	if (randomBool(gen) > 0)
 		mazeExit.x = exitX(gen);
 	else
 		mazeExit.y = exitY(gen);
-	wall_Object[mazeExit.x][mazeExit.y].isActive = false;
+	wall_Object[mazeExit.y - 1][mazeExit.x].SetActive(false);
+	wall_Object[mazeExit.y][mazeExit.x - 1].SetActive(false);
+	wall_Object[mazeExit.y][mazeExit.x].SetActive(false);
+	
+	wall_Object[pivot_Maze.y][pivot_Maze.x].SetActive(false);
+	for (int i = 0; i < count; i++)
+		mazeDotPos[i] = { exitX(gen), exitY(gen) };
 
-	Position2 load = { wall_number.x / 2, wall_number.y / 2 };
-	bool loadXY;
-	bool load_P_M;
-	while (true)
-	{
-		loadXY = randomBool(gen);
-		load_P_M = randomBool(gen);
+	{	//시작점과 출구 연결해주기
+		for (int y = pivot_Maze.y; y != mazeExit.y; (pivot_Maze.y - mazeExit.y > 0) ? y-- : y++)
+			wall_Object[y][pivot_Maze.x].SetActive(false);
+		wall_Object[mazeExit.y][pivot_Maze.x].SetActive(false);
 
-		for (int i = 0; i < 3; i++)
-		{
-			if (load.x == mazeExit.x && load.y == mazeExit.y)
-				return;
-
-			if (load.x == 0)
-				load.x += 2;
-			else if (load.x == wall_number.x)
-				load.x -= 2;
-			else if (load.y == 0)
-				load.y += 2;
-			else if (load.y == wall_number.y)
-				load.y -= 2;
-
-			wall_Object[load.x][load.y].isActive = false;
-
-			if ((load.x - 1 == 0 && load.y == mazeExit.y) ||
-				(load.x == mazeExit.x && load.y - 1 == 0))
-				return;
-
-			if (loadXY)
-			{
-				if (load_P_M)
-					load.x--;
-				else
-					load.x++;
-			}
-			else
-			{
-				if (load_P_M)
-					load.y--;
-				else
-					load.y++;
-			}
-		}
+		for (int x = pivot_Maze.x; x != mazeExit.x; (pivot_Maze.x - mazeExit.x > 0) ? x-- : x++)
+			wall_Object[mazeExit.y][x].SetActive(false);
+		wall_Object[mazeExit.y][mazeExit.x].SetActive(false);
 	}
+	for (int i = 0; i < count; i++)
+	{
+		// 시작점과 모든 정점 연결해주기
+		for (int y = pivot_Maze.y; y != mazeDotPos[i].y; (pivot_Maze.y - mazeDotPos[i].y > 0) ? y-- : y++)
+			wall_Object[y][pivot_Maze.x].SetActive(false);
+		wall_Object[mazeDotPos[i].y][pivot_Maze.x].SetActive(false);
+
+ 		for (int x = pivot_Maze.x; x != mazeDotPos[i].x; (pivot_Maze.x - mazeDotPos[i].x > 0) ? x-- : x++)
+			wall_Object[mazeDotPos[i].y][x].SetActive(false);
+		wall_Object[mazeDotPos[i].y][mazeDotPos[i].x].SetActive(false);
+		
+		// i번쨰 정점과 랜덤한 정점 1개를 연결해주기
+		int rc = i + 1;
+		if (rc >= count)
+			return;
+		for (int y = mazeDotPos[i].y; y != mazeDotPos[rc].y; (mazeDotPos[i].y - mazeDotPos[rc].y > 0) ? y-- : y++)
+			wall_Object[y][mazeDotPos[i].x].SetActive(false);
+		for (int x = mazeDotPos[i].x; x != mazeDotPos[rc].x; (mazeDotPos[i].x - mazeDotPos[rc].x > 0) ? x-- : x++)
+			wall_Object[mazeDotPos[rc].y][x].SetActive(false);
+	}
+
 }
 
 void GL_Maze::RandomMovingScaleAnimaiton()
@@ -137,12 +207,15 @@ void GL_Maze::RandomMovingScaleAnimaiton()
 	{
 		for (int x = 0; x < wall_number.x; x++)
 		{
-			if (wall_Object[y][x].transform.worldScale.y <= 0.1f)
-				wall_Object[y][x].yScaleSpeed = 0.1f;
-			else if (wall_Object[y][x].transform.worldScale.y >= 10.0f)
-				wall_Object[y][x].yScaleSpeed = -0.1f;
+			if (!wall_Object[y][x].ActiveSelf())
+				continue;
 
-			wall_Object[y][x].transform.worldScale.y += wall_Object[y][x].yScaleSpeed;
+			if (wall_Object[y][x].transform.worldScale.y < 0.1f)
+				wall_Object[y][x].yScaleSpeed = scaleMovingSpeed;
+			else if (wall_Object[y][x].transform.worldScale.y > 5)
+				wall_Object[y][x].yScaleSpeed = -scaleMovingSpeed;
+
+			wall_Object[y][x].transform.worldScale.y += wall_Object[y][x].yScaleSpeed * FrameTime::oneFrame;
 			wall_Object[y][x].transform.worldPivot.y = wall_Object[y][x].transform.worldScale.y / 2;
 		}
 	}

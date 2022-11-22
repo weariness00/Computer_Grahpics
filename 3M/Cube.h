@@ -12,8 +12,10 @@ public:
 	~Cube();
 
 public:
-	void Update();
+	void Enable();
+	void Disable();
 	void Init();
+	void Update();
 
 private:
 	void MoveMent();

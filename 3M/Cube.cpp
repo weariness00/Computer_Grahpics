@@ -16,16 +16,28 @@ Cube::Cube()
 	block.faceIndex = cube_Block->faceIndex;
 	block.vertices = cube_Block->vertices;
 	block.face = cube_Block->face;
+
+	collider.tag = "Wall";
+	collider.object = this;
+	//collider.SetBox_OBB(vec3(1));
+	vec3 box[2] = { vec3(-0.5), vec3(0.5) };
+	collider.SetBox(box, 2);
+
+	//SetActive(false);
 }
 
 Cube::~Cube()
 {
 }
 
-void Cube::Update()
+void Cube::Enable()
 {
-	MoveMent();
-	SetMatrix();
+	this->collider.isCollide = true;
+}
+
+void Cube::Disable()
+{
+	this->collider.isCollide = false;
 }
 
 void Cube::Init()
@@ -33,15 +45,17 @@ void Cube::Init()
 	Object::Init();
 
 	color.SetRandomColor();
-	collider.InitTransform(transform);
-	collider.SetBox(block.vertices);
-	collider.tag = "Object";
 
-	Render::mainRender->AddObject(this);
+	Render::objectRenedr->AddObject(this);
+}
+
+void Cube::Update()
+{
+	MoveMent();
 }
 
 void Cube::MoveMent()
 {
-	transform.worldPosition += worldSpeed;
-	transform.worldRotation += worldRotateSpeed;
+	transform.worldPosition += worldSpeed * FrameTime::oneFrame;
+	transform.worldRotation += worldRotateSpeed * FrameTime::oneFrame;
 }

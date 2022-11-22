@@ -66,6 +66,12 @@
     <ClCompile Include="Transform.cpp">
       <Filter>소스 파일\FrameWork</Filter>
     </ClCompile>
+    <ClCompile Include="Vertex_AFX.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Collapse_Cube.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GL_Maze.h">
@@ -104,6 +110,12 @@
     <ClInclude Include="Player.h">
       <Filter>헤더 파일\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Vector_AFX.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Collapse_Cube.h">
+      <Filter>헤더 파일\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Object Include="BladeSword.obj">
@@ -113,6 +125,9 @@
       <Filter>리소스 파일</Filter>
     </Object>
     <Object Include="Player.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="Collapse_Cube.obj">
       <Filter>리소스 파일</Filter>
     </Object>
   </ItemGroup>

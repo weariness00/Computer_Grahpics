@@ -20,13 +20,18 @@ public:
 	~Object();
 
 public:
+	virtual void Enable() {};
+	virtual void Disable() {};
 	virtual void Update();
 	virtual void Init();
-	virtual void ObjcetDraw();
+	virtual void ObjectDraw();
 	virtual void Collision();
 
 	//virtual void Handle_Evnet();
 
+public:
+	bool ActiveSelf() { return isActive; };
+	void SetActive(bool value);
 	void Info();
 public:
 	mat4& SetMatrix();
@@ -38,9 +43,8 @@ public:
 	Color color;
 
 	ObjectBlock block;
-	GLuint VAO;
 
-	bool isActive;
+	bool isDraw;
 public:
 	vec3 worldSpeed;
 	vec3 localSpeed;
@@ -52,5 +56,8 @@ public:
 
 
 protected:
-	GLuint VAO_Dot, VAO_Index;
+	GLuint VAO, VAO_Dot, VAO_Index;
+
+private:
+	bool isActive;
 };

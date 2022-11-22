@@ -285,24 +285,29 @@ void ReadObj(char* fileName, ObjectBlock& block)
 	obj = fopen(fileName, "r");
 
 	//--- 1. 전체 버텍스 개수 및 삼각형 개수 세기
-	char count[100];
 	char lineHeader[200];
 	int vertexNum = 0;
 	int faceNum = 0;
+	int groupNum = 0;
 	while (!feof(obj)) {
-		fscanf(obj, "%s", count);
-		if (count[0] == 'v' && count[1] == '\0')
+		fscanf(obj, "%s", lineHeader);
+		if (strcmp(lineHeader, "v") == 0)
 			vertexNum += 1;
-		else if (count[0] == 'f' && count[1] == '\0')
+		else if (strcmp(lineHeader, "f") == 0)
 			faceNum += 1;
-		memset(count, '\0', sizeof(count));
+		else if (strcmp(lineHeader, "g") == 0)
+			groupNum++;
+		memset(lineHeader, '\0', sizeof(lineHeader));
 	}
 	fclose(obj);
 	//--- 2. 메모리 할당'
+	block.fGroups = new vector<Face>[groupNum];
 	block.vertIndex = 0;
 	block.faceIndex = 0;
-	//block.vertex = new vec3[vertexNum];
-	block.face = new Face[faceNum];
+	block.groupIndex = 0;
+	//block.face = new Face[faceNum];
+	block.max = vec3(0);
+	block.min = vec3(0);
 	unsigned short faces[3] = {};
 
 	//--- 3. 할당된 메모리에 각 버텍스, 페이스 정보 입력
@@ -320,6 +325,8 @@ void ReadObj(char* fileName, ObjectBlock& block)
 			glm::vec3 vertex;
 			fscanf(obj, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
 			block.vertices.push_back(vertex);
+			block.max = max(vertex, block.max);
+			block.min = min(vertex, block.min);
 		}
 		//else if (strcmp(lineHeader, "vt") == 0) {
 		//	vec2 uv;
@@ -366,9 +373,15 @@ void ReadObj(char* fileName, ObjectBlock& block)
 
 				--i;
 			}
-			block.face[block.faceIndex] = { faces[0], faces[1], faces[2] };
+			block.face.push_back({ faces[0], faces[1], faces[2] });
+			//block.face[block.faceIndex] = { faces[0], faces[1], faces[2] };
+			block.fGroups[block.groupIndex - 1].push_back({ faces[0], faces[1], faces[2] });
 			block.faceIndex++;	
 		}
+		else if (strcmp(lineHeader, "g") == 0) {
+			block.groupIndex++;
+		}
+		memset(lineHeader, '\0', sizeof(lineHeader));
 	}
 	//fclose(obj);	// Player 불러올때 에러 나서 잠시 꺼둠 이유는 모름
 }

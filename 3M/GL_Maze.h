@@ -9,8 +9,11 @@ public:
 public:
 	void Init();
 	void Update();
+	void Handle_Evnet(unsigned char key);
+	void Handle_Evnet(int specialKey);
 
 public:
+	void ReSet();
 	void MakeMaze();
 
 	void RandomMovingScaleAnimaiton();
@@ -21,6 +24,7 @@ public:
 
 	Position2 wall_number;
 
+	float scaleMovingSpeed = 1;
 	bool isRandomScaleMoveing = false;
 };
 
