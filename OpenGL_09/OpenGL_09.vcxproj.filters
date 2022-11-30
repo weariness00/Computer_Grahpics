@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="프레임워크">
+      <UniqueIdentifier>{60360f95-a599-44bc-9406-0ea7f1faeda0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="프레임워크\헤더">
+      <UniqueIdentifier>{9b42904c-4e40-477b-8744-084f8a1dc1ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="프레임워크\소스">
+      <UniqueIdentifier>{9c58861b-b37e-42f4-9b98-bfdc3447232e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{43d10038-d62d-4e33-826b-bde6283e0ea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\소스">
+      <UniqueIdentifier>{cfda1a29-9bab-4a2f-bad9-d8ee81375eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\헤더">
+      <UniqueIdentifier>{7390fd2d-858a-4a78-8bcf-358e922ef71c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Afx.cpp">
+      <Filter>프레임워크\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>프레임워크\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>프레임워크\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameTime.cpp">
+      <Filter>프레임워크\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>프레임워크\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>프레임워크\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>프레임워크\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GL_Tetrahedron.cpp">
+      <Filter>Object\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Object\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Object\소스</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Afx.h">
+      <Filter>프레임워크\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>프레임워크\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>프레임워크\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameTime.h">
+      <Filter>프레임워크\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>프레임워크\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>프레임워크\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>프레임워크\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Object\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="GL_Tetrahedron.h">
+      <Filter>Object\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Object\헤더</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Cube.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="Player.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="Tetrahedron.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="Sphere.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Fragment.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Vertex.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
+</Project>
