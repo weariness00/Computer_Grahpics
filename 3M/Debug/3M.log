@@ -4,18 +4,18 @@ D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(64,29): warning C4244: '=': 'in
           [
               T=float
           ]
-D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(76,33): warning C4244: '=': 'clock_t'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(89,44): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(77,33): warning C4244: '=': 'clock_t'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(96,44): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
           with
           [
               T=float
           ]
-D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(91,44): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(100,44): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
           with
           [
               T=float
           ]
-D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(93,44): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
+D:\GItData\DongWoo_Computer_Grahpics\3M\main.cpp(102,44): warning C4305: '=': 'double'에서 'T'(으)로 잘립니다.
           with
           [
               T=float

@@ -113,6 +113,15 @@ void GL_Maze::Handle_Evnet(unsigned char key)
 			}
 		}
 		break;
+	case 'v':
+		if (isRandomScaleMoveing)
+		{
+			isRandomScaleMoveing = false;
+			SetWall_YScale(2.0f);
+		}
+		else
+			isRandomScaleMoveing = true;
+		break;
 	default:
 		break;
 	}

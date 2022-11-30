@@ -28,11 +28,11 @@ Render objectRender;
 
 list<Object*> Object::allObject;
 
-Player player;
 GL_Maze maze_Object;
 CollapseCube collapseCube_Object;
 
 Cube plan_Obj;
+Player player;
 
 int main(int argc, char** argv)
 {
@@ -65,6 +65,7 @@ int main(int argc, char** argv)
 		camera.isProjection = true;
 
 		mapCamera.isProjection_XZ = true;
+		mapCamera.target_Pos = &player.transform;
 
 		playerPitchCamera.isPitch = true;
 		playerPitchCamera.name = "Pitch";
@@ -75,10 +76,16 @@ int main(int argc, char** argv)
 		Object::vColorLocation = glGetUniformLocation(s_program, "vColor");
 		FrameTime::currentTime = clock();
 
+
 		maze_Object.wall_number = { x,y };
 		collapseCube_Object.transform.worldScale *= 0.1;
-		collapseCube_Object.transform.worldScale *= (x + y) / 3;
+		collapseCube_Object.transform.worldScale *= (x + y) / 1.5;
 		collapseCube_Object.defaultCameraDistance = camera.cameraPos.z;
+
+		for (const auto& obj : Object::allObject)
+			obj->Init();
+		for (const auto& collider : Collider::allCollider)
+			collider->Init();
 
 		player.transform.worldScale *= 0.1;
 
@@ -87,15 +94,12 @@ int main(int argc, char** argv)
 		plan_Obj.transform.worldScale.x *= x;
 		plan_Obj.transform.worldScale.z *= y;
 		plan_Obj.transform.worldPosition.y = -0.1;
+		plan_Obj.color.SetColor({ 1,1,1,1 });
+
 		if (x % 2 == 1)
 			plan_Obj.transform.worldPosition.x = 0.1;
 		if (y % 2 == 1)
 			plan_Obj.transform.worldPosition.z = 0.1;
-
-		for (const auto& obj : Object::allObject)
-			obj->Init();
-		for (const auto& collider : Collider::allCollider)
-			collider->Init();
 
 		PrintCMD();
 	}
@@ -159,10 +163,10 @@ void drawScene()
 
 		objectRender.Draw();
 
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		//for (const auto& collider : Collider::allCollider)
-		//	collider->DrawBox();
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		for (const auto& collider : Collider::allCollider)
+			collider->DrawBox();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
 	{	// Map ViewPort
@@ -227,9 +231,6 @@ void KeyBoard(unsigned char key, int x, int y)
 	case 'r':
 		maze_Object.MakeMaze();
 		break;
-	case 'v':
-		maze_Object.SetWall_YScale(2.0f);
-		break;
 	case 'e':
 		player.SetActive(true);
 		player.transform.worldPosition.x = 0;
@@ -238,6 +239,7 @@ void KeyBoard(unsigned char key, int x, int y)
 
 	case 'c':
 		player.SetActive(false);
+		fristCamera = &camera;
 		camera.cameraPos = vec3(0, 0, 5);
 		camera.yRotate = 0;
 		maze_Object.ReSet();
@@ -338,9 +340,11 @@ void PrintCMD()
 	cout << "Player가 제가 직접 모델링한 간단한 망치인데 Metrial을 적용할줄 몰라 현재 하얀색 입니다.;;" << endl;
 	cout << endl;
 	cout << "q : 프로그램 종료" << endl;
-	cout << "v : 앞에 보이는 정육면체가 부셔진다. (v를 한번 더 누르면 스킾)" << endl;
+	cout << "f : 앞에 보이는 정육면체가 부셔진다. (f를 한번 더 누르면 스킾)" << endl;
 	cout << endl;
+	cout << "e : Player 생성" << endl;
 	cout << "캐릭터 이동 w a s d" << endl;
+	cout << "Space Bar : 플레이어 대쉬" << endl;
 	cout << "마우스 우클릭하면 화면 회전이 멈추며 마우스 가두기가 멈춤 " << endl;
 	cout << endl;
 	cout << "1 : 1인칭 카메라" << endl;
@@ -350,7 +354,8 @@ void PrintCMD()
 	cout << endl;
 	cout << "+/- : 기둥이 속도가 증가/감소 한다." << endl;
 	cout << "m : 기둥이 위 아래로 움직인다." << endl;
+	cout << "v : 기둥이 높으가 고정된다. 또한 기둥의 움직임이 멈춘다/다시 움직인다." << endl;
 	cout << "r : 새로운 미로 생성" << endl;
-	cout << "e : Player 생성" << endl;
+	cout << endl;
 	cout << "c : 모두 초기화" << endl;
 }

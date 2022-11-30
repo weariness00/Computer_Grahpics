@@ -64,7 +64,7 @@ void CollapseCube::Handle_Evnet(unsigned char key)
 {
 	switch (key)
 	{
-	case 'v':
+	case 'f':
 		if (delCount == block.groupIndex)
 			break;
 		if (isDistroy)

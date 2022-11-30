@@ -34,6 +34,7 @@ void Camera::Draw()
 	{
 		projection = ortho(-size, size, -size, size, -size, size);
 		projection = rotate(projection, radians(90.0f), vec3(1, 0, 0));
+		projection = translate(projection, target_Pos->worldPosition);
 	}
 	else if(isProjection)
 	{

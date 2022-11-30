@@ -22,12 +22,16 @@ public:
 	void Collision();
 
 private:
+	void Dash();
 
 public:
 	Collider collider;
 
 	float speed = 1;
 private:
+	vec3 prevPos;
 
+	float dashTime = 0;
+	bool isDash = false;
 };
 

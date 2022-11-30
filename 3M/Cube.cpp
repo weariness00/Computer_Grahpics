@@ -19,7 +19,7 @@ Cube::Cube()
 
 	collider.tag = "Wall";
 	collider.object = this;
-	//collider.SetBox_OBB(vec3(1));
+	collider.SetBox_OBB(vec3(1));
 	vec3 box[2] = { vec3(-0.5), vec3(0.5) };
 	collider.SetBox(box, 2);
 
