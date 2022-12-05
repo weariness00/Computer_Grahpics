@@ -13,11 +13,26 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{a68e7a6f-00f4-4e23-a7ca-fbb32f95ca2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\OpenGL">
+      <UniqueIdentifier>{e40e7837-7bef-4050-a3fe-8c3a75acc55f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{39c8f9d6-0fa9-437a-bc88-7885e8fe45de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Default">
+      <UniqueIdentifier>{a8bcaee9-1285-473f-a2b2-9f26cbe38c33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Obj">
+      <UniqueIdentifier>{0e002243-6aa7-402c-9721-73c67199606a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Function">
+      <UniqueIdentifier>{449349bc-3586-4b24-a3f0-52ccef919bd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Afx.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -39,17 +54,29 @@
     <ClCompile Include="Cube.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GL_Coordinate.cpp">
+    <ClCompile Include="Light.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Line.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>FrameWork\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJ.cpp">
+      <Filter>FrameWork\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Object\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>FrameWork\Function</Filter>
+    </ClCompile>
+    <ClCompile Include="Afx.cpp">
+      <Filter>FrameWork\Function</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>FrameWork\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Afx.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -68,11 +95,26 @@
     <ClInclude Include="GL_Crane.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GL_Coordinate.h">
+    <ClInclude Include="Light.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Line.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Mesh.h">
+      <Filter>FrameWork\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJ.h">
+      <Filter>FrameWork\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Object\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>FrameWork\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="Afx.h">
+      <Filter>FrameWork\Function</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>FrameWork\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -85,10 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <Object Include="Cube.obj">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Obj</Filter>
     </Object>
-    <Object Include="Line.obj">
-      <Filter>리소스 파일</Filter>
+    <Object Include="Sphere.obj">
+      <Filter>리소스 파일\Obj</Filter>
     </Object>
   </ItemGroup>
 </Project>

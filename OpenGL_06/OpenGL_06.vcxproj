@@ -23,11 +23,15 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Cube.cpp" />
-    <ClCompile Include="GL_Coordinate.cpp" />
     <ClCompile Include="GL_Crane.cpp" />
-    <ClCompile Include="Line.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="OBJ.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -35,17 +39,21 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Cube.h" />
-    <ClInclude Include="GL_Coordinate.h" />
     <ClInclude Include="GL_Crane.h" />
-    <ClInclude Include="Line.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="OBJ.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="Render.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Cube.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </Object>
-    <Object Include="Line.obj">
+    <Object Include="Sphere.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </Object>
   </ItemGroup>

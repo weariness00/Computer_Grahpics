@@ -1,50 +1,45 @@
 #pragma once
 
 #include "Transform.h"
-#include "Color.h"
 #include "Camera.h"
 
-//extern vec3 cameraPos;
-//extern vec3 cameraDirection;
-//extern vec3 cameraUp;
-
-//extern bool isProjection;
-
-extern Camera mainCamera;
-
 class Object {
+public:
+	static int ID_Count;
+	static list<Object*> allObject;
+
+	static unsigned char key;
+	static unsigned char keyUp;
+	static int specialKey;
+	static int specialKeyUp;
+
+	static unsigned int meterialBlockLoaction;
+
 public:
 	Object();
 	~Object();
 
 public:
-	void virtual Update();
-	void virtual Init();
-
-	void virtual Draw();
-	void lineDraw();
+	virtual void Enable() {};
+	virtual void Disable() {};
+	virtual void Init();
+	virtual void Update();
+	virtual void OnCollision() {};
+	virtual void MyTimer();
+	virtual mat4& SetMatrix();
 
 public:
-	void SetMatrix();
+	bool ActiveSelf() { return isActive; };
+	void SetActive(bool value);
+
+	void Info();
 
 public:
+	int id;
 	string name;
-	static Camera* camera;
 	Transform transform;
-	Color color;
 
+private:
 	bool isActive;
-
-	vec3 worldSpeed;
-	vec3 worldPivotSpeed;
-
-	vec3 worldRotateSpeed;
-	vec3 localRotateSpeed;
-
-	// 문제 풀기 위한 임시 변수
-	float zRotate;
-protected:
-	GLuint VAO, VAO_Dot, VAO_Index;
-
-	ObjectBlock block;
+	
 };

@@ -18,7 +18,7 @@ public:
 
 public:
 	void Init();
-	void Draw();
+	void Update();
 
 	void ReSet();
 
@@ -27,7 +27,7 @@ private:
 
 public:
 	Cube cube_Object[4];
-
+	vec3 worldSpeed;
 private:
 
 };

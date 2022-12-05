@@ -1,6 +1,6 @@
 
 #include "GL_Crane.h"
-#include "GL_Coordinate.h"
+#include "Light.h"
 
 void drawScene();
 GLvoid Reshape(int w, int h);
@@ -11,18 +11,21 @@ void Motion(int x, int y);
 void ReadObj(char* fileName);
 
 void InitMain();
-void Draw();
 
-Camera mainCamera;
+list<Object*> Object::allObject;
+list<Mesh*> Mesh::allMesh;
+
+Render objectRender;
+
+Camera camera;
 Camera xyCamera;
 Camera xzCamera;
 
 Color windowColor;
-
-GL_Coordinate coordinate_Object;
-
 GL_Crane crane_Object;
 Cube plan_Object;
+
+Light light;
 
 bool is_Polygon = false;
 bool is_CullFace = false;
@@ -45,10 +48,17 @@ int main(int argc, char** argv)
 	glEnable(GL_DEPTH_TEST);
 
 	//--- GLEW 초기화하기
-	glewExperimental = GL_TRUE;
 	glewInit();
 
 	InitShader();
+	glewExperimental = GL_TRUE;
+	Mesh::modelLocation = glGetUniformLocation(s_program, "modelTransform");
+	Mesh::vColorLocation = glGetUniformLocation(s_program, "vColor");
+	Light::lightPosLocation = glGetUniformLocation(s_program, "lightPos");
+	Light::lightColorLocation = glGetUniformLocation(s_program, "lightColor");
+	Camera::viewPosLocation = glGetUniformLocation(s_program, "viewPos");
+
+	Render::meshtRender = &objectRender;
 	InitMain();
 
 	glutDisplayFunc(drawScene);
@@ -64,8 +74,23 @@ void drawScene()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	for (const auto& obj : Object::allObject)
+	{
+		if (!obj->ActiveSelf())
+			continue;
+		obj->Update();
+	}
+
+	for (const auto& obj : Object::allObject)
+	{
+		if (!obj->ActiveSelf())
+			continue;
+
+		obj->SetMatrix();
+	}
+
 	if (isPressA)
-		mainCamera.transform.worldRotation.y += 1;
+		camera.transform.worldRotation.y += 1;
 	if (isPress_t)
 	{
 		if (crane_Object.cube_Object[Cube_Right].zRotate <= 90 && crane_Object.cube_Object[Cube_Right].zRotate > 0)
@@ -127,30 +152,30 @@ void drawScene()
 	}
 
 	{
-		glViewport(50, windowSize_H/5, windowSize_W /2 , windowSize_H / 2);
-		Object::camera = &mainCamera;
+		/*glViewport(50, windowSize_H/5, windowSize_W /2 , windowSize_H / 2);*/
+		glViewport(0, 0, windowSize_W, windowSize_H);
+		Camera::mainCamera = &camera;
 
-		Draw();
+		Render::meshtRender->Draw();
 	}
 	
-	{
-		glViewport(windowSize_W * 3 / 5, windowSize_H / 2, windowSize_W * 3 / 10, windowSize_H * 3 / 10);
-		Object::camera = &xyCamera;
+	//{
+	//	glViewport(windowSize_W * 3 / 5, windowSize_H / 2, windowSize_W * 3 / 10, windowSize_H * 3 / 10);
+	//	Camera::mainCamera = &xyCamera;
 
-		Draw();
-	}
+	//	Render::meshtRender->Draw();
 
-	{
-		glViewport(windowSize_W * 3/ 5, 100, windowSize_W * 3 / 10, windowSize_H * 3 / 10);
-		Object::camera = &xzCamera;
+	//}
 
-		Draw();
-	}
+	//{
+	//	glViewport(windowSize_W * 3/ 5, 100, windowSize_W * 3 / 10, windowSize_H * 3 / 10);
+	//	Camera::mainCamera = &xzCamera;
+
+	//	Render::meshtRender->Draw();
+	//}
 
 	glutSwapBuffers();
-	Time_Duration = floor(difftime(time(NULL), Start_Time));
-	glutTimerFunc(1000 / 60 - Time_Duration, FrameTimer, 1);
-	Start_Time = time(NULL);
+	glutTimerFunc(0, FrameTimer, 1);
 }
 
 GLvoid Reshape(int w, int h)
@@ -191,39 +216,41 @@ void KeyBoard(unsigned char key, int x, int y)
 	//	break;
 
 	case 'z':
-		mainCamera.transform.worldPosition.z += speed;
+		camera.transform.worldPosition.z += speed;
 		break;
 	case 'Z':
-		mainCamera.transform.worldPosition.z -= speed;
+		camera.transform.worldPosition.z -= speed;
 		break;
 
 	case 'x':
-		mainCamera.transform.worldPosition.x += speed;
+		camera.transform.worldPosition.x += speed;
 		break;
 	case 'X':
-		mainCamera.transform.worldPosition.x -= speed;
+		camera.transform.worldPosition.x -= speed;
 		break;
 
 	case 'y':
-		mainCamera.isRotate = false;
-		mainCamera.transform.localRotation.y += 1;
+		camera.isRotate = false;
+		camera.transform.localRotation.y += 1;
 		break;
 	case 'Y':
-		mainCamera.isRotate = false;
-		mainCamera.transform.localRotation.y -= 1;
+		camera.isRotate = false;
+		camera.transform.localRotation.y -= 1;
 		break;
 
 	case 'r':
-		mainCamera.isRotate = true;
-		mainCamera.transform.worldRotation.y += 1;
+		camera.yRotate++;
+		camera.cameraPos.x = cos(radians(camera.yRotate));
+		camera.cameraPos.z = sin(radians(camera.yRotate));
 		break;
 	case 'R':
-		mainCamera.isRotate = true;
-		mainCamera.transform.worldRotation.y -= 1;
+		camera.yRotate--;
+		camera.cameraPos.x = cos(radians(camera.yRotate));
+		camera.cameraPos.z = sin(radians(camera.yRotate));
 		break;
 
 	case 'a':
-		mainCamera.isRotate = true;
+		camera.isRotate = true;
 		isPressA = true;
 		break;
 	case 'A':
@@ -245,10 +272,10 @@ void KeyBoard(unsigned char key, int x, int y)
 		break;
 	case 'c':
 		isPressA = false;
-		mainCamera.transform.ReSet();
-		mainCamera.transform.localRotation.x = 45;
-		mainCamera.transform.localPivot.y = -3;
-		mainCamera.transform.worldPosition.z = -4.5;
+		camera.transform.ReSet();
+		camera.transform.localRotation.x = 45;
+		camera.transform.localPivot.y = -3;
+		camera.transform.worldPosition.z = -4.5;
 
 		crane_Object.ReSet();
 		break;
@@ -340,56 +367,34 @@ void SpecialKeyBoard(int key, int x, int y)
 
 void Mouse(int button, int state, int x, int y)
 {
-	StartMouse = { (float)x, (float)y };
-	StartMouse = Coordinate(StartMouse);
-	StartMouse.y = -StartMouse.y;
-
-	Vector2 realStartMouse = RealPosition(StartMouse);
-
 	glutPostRedisplay();
 }
 
 void Motion(int x, int y)
 {
-	Vector2 mouse_Pos = { (float)x, (float)y };
-	mouse_Pos = Coordinate(mouse_Pos);
-	mouse_Pos.y = -mouse_Pos.y;
-
-	StartMouse = { (float)x, (float)y };
-	StartMouse = Coordinate(StartMouse);
-	StartMouse.y = -StartMouse.y;
 	glutPostRedisplay();
 }
 
 void InitMain() 
 {
 	windowColor.R = windowColor.G = windowColor.B = 0;
+	for (const auto& obj : Object::allObject)
+		obj->Init();
+	for (const auto& mesh : Mesh::allMesh)
+		mesh->MeshInit();
 
-	mainCamera.isProjection = true;
-	mainCamera.transform.localRotation.x = 45;
-	mainCamera.transform.localPivot.y = -3;
-	mainCamera.transform.worldPosition.z = -4.5;
+	light.transform.worldPosition.x = 1;
+
+	camera.isPitch = true;
+	camera.target_Pos = new Transform;
+	camera.cameraPos.y = 1;
+	camera.cameraPos.z = 1;
 
 	xyCamera.isProjection_XY = true;
 	xzCamera.isProjection_XZ = true;
 
-	coordinate_Object.Init();
-	coordinate_Object.isActive = true;
-
-	crane_Object.Init();
-	crane_Object.isActive = true;
-
-	plan_Object.Init();
 	plan_Object.color.SetRandomColor();
-	plan_Object.isActive = true;
 	plan_Object.transform.worldScale.x *= 10;
 	plan_Object.transform.worldScale.z *= 10;
 	plan_Object.transform.worldPosition.y = -1;
-}
-
-void Draw()
-{
-	coordinate_Object.Draw();
-	crane_Object.Draw();
-	plan_Object.Draw();
 }
