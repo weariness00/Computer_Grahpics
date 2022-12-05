@@ -1,8 +1,10 @@
 #include "Cube.h"
 
-Cube::Cube() : Mesh(this)
+Cube::Cube()
 {
-	zRotate = 0;
+	ReadObj((char*)"Cube.obj", block);
+	isActive = true;
+
 	worldSpeed = worldRotateSpeed = vec3(0, 0, 0);
 }
 
@@ -13,14 +15,21 @@ Cube::~Cube()
 
 void Cube::Init()
 {
-	obj = new OBJ;
-	obj->ReadObj((char*)"Cube.obj");
-	Render::meshtRender->AddObject(this);
+	Object::Init();
 }
 
-void Cube::Update()
+void Cube::Draw()
 {
+	if (!isActive)
+		return;
+
 	MoveMent();
+
+	Object::SetMatrix();
+
+	//glPointSize(5.0f);
+	//glDrawArrays(GL_POINTS, 0, block.vertIndex);
+	glDrawElements(GL_TRIANGLES, block.faceIndex * 3, GL_UNSIGNED_SHORT, 0);
 }
 
 void Cube::MoveMent()

@@ -1,73 +1,110 @@
 #include "Object.h"
 
-//list<Object*> Object::allObject;	//main.cpp 에서 전역변수로 Object 호출시 static 부분 무시함 (이유는 모름)
-int Object::ID_Count = 0;
-unsigned char Object::key;
-unsigned char Object::keyUp;
-int Object::specialKey;
-int Object::specialKeyUp;
+//vec3 cameraPos = vec3(0.0f, 0.0f, 5.0f); //--- 카메라 위치
+//vec3 cameraDirection = vec3(0.0f, 0.0f, 0.0f); //--- 카메라 바라보
+//vec3 cameraUp = vec3(0.0f, 1.0f, 0.0f); //--- 카메라 위쪽 방향
 
-unsigned int Object::meterialBlockLoaction;
+//bool isProjection = true;
 
-Object::Object(): transform()
+Camera* Object::camera = nullptr;
+
+Object::Object()
 {
-	id = ID_Count++;
 	name = "UnName";
-	isActive = true;
+	isActive = false;
+	camera = &mainCamera;
 
-	allObject.push_back(this);
+	zRotate = 0;
 }
 
 Object::~Object()
 {
-	allObject.erase(remove(allObject.begin(), allObject.end(), this), allObject.end());
 }
 
 void Object::Update()
 {
 }
+
 void Object::Init()
 {
+	glUseProgram(s_program);
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VAO_Dot);
+	glGenBuffers(1, &VAO_Index);
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VAO_Dot);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * block.vertIndex, block.vertex, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VAO_Index); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Face) * block.faceIndex, block.face, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vec3), 0);
+	glEnableVertexAttribArray(0);
+
+	delete block.vertex;
+	delete block.face;
 }
 
-void Object::SetActive(bool value)
+void Object::Draw()
 {
-	if (this->isActive == false && value == true)
-		this->Enable();
-	else if (this->isActive == true && value == false)
-		this->Disable();
+	if (!isActive)
+		return;
 
-	this->isActive = value;
-}
-void Object::Info()
-{
-	cout << id << " : " << name << endl;
+	SetMatrix();
+
+	glPointSize(5.0f);
+	glDrawArrays(GL_POINTS, 0, block.vertIndex);
+	glDrawElements(GL_TRIANGLES, block.faceIndex * 3, GL_UNSIGNED_SHORT, 0);
 }
 
-void Object::MyTimer()
+void Object::lineDraw()
 {
+	if (!isActive)
+		return;
+
+	SetMatrix();
+	glDrawArrays(GL_LINES, 0, block.vertIndex);
 }
 
-mat4& Object::SetMatrix()
+void Object::SetMatrix()
 {
+	glUseProgram(s_program);
+
+	camera->Draw();
+
+	int modelLocation = glGetUniformLocation(s_program, "modelTransform");
+	int vColorLocation = glGetUniformLocation(s_program, "vColor");
+
 	mat4 worldModel = mat4(1.0);
 	mat4 localModel = mat4(1.0);
 
-	localModel = translate(localModel, transform.localPivot);
+	
 	localModel = translate(localModel, transform.localPosition);
 	localModel = rotate(localModel, radians(transform.localRotation.x), vec3(1.0, 0, 0));
 	localModel = rotate(localModel, radians(transform.localRotation.y), vec3(0, 1.0, 0));	// y축으로 자전 해주고 싶어 처음에 추가
 	localModel = rotate(localModel, radians(transform.localRotation.z), vec3(0, 0, 1.0));
+	localModel = translate(localModel, transform.localPivot);
 	localModel = scale(localModel, transform.localScale);
 
-	worldModel = translate(worldModel, transform.worldPivot);
+
 	worldModel = translate(worldModel, transform.worldPosition);
 	worldModel = rotate(worldModel, radians(transform.worldRotation.x), vec3(1.0, 0, 0));
 	worldModel = rotate(worldModel, radians(transform.worldRotation.y), vec3(0, 1.0, 0));
 	worldModel = rotate(worldModel, radians(transform.worldRotation.z), vec3(0, 0, 1.0));
+	worldModel = translate(worldModel, transform.worldPivot);
+
+	{
+		// 임시
+		worldModel = rotate(worldModel, radians(zRotate), vec3(0, 0, 1.0));
+	}
 	worldModel = scale(worldModel, transform.worldScale);
 
-	transform.model = localModel * worldModel;
 
-	return transform.model;
+	mat4 model = localModel * worldModel;
+
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, value_ptr(model));
+	glUniform4f(vColorLocation, color.R, color.G, color.B, color.A);
+
+	glBindVertexArray(VAO);
 }

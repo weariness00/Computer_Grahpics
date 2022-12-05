@@ -2,7 +2,6 @@
 
 GL_Crane::GL_Crane()
 {
-	worldSpeed = vec3(0);
 }
 
 GL_Crane::~GL_Crane()
@@ -13,6 +12,7 @@ void GL_Crane::Init()
 {
 	for (int i = 0; i < Cube_MaxIndex; i++)
 	{
+		cube_Object[i].Init();
 		cube_Object[i].color.SetRandomColor();
 	}
 
@@ -42,9 +42,22 @@ void GL_Crane::Init()
 
 }
 
-void GL_Crane::Update()
+void GL_Crane::Draw()
 {
+	if (!isActive)
+		return;
+
 	MoveMent();
+
+	for (int i = 0; i < Cube_MaxIndex; i++)
+	{
+		cube_Object[i].transform.localPivot = transform.worldPivot;
+		cube_Object[i].transform.localPosition = transform.worldPosition;
+		cube_Object[i].transform.localRotation = transform.worldRotation;
+		cube_Object[i].transform.localScale = transform.worldScale;
+
+		cube_Object[i].Draw();
+	}
 }
 
 void GL_Crane::ReSet()

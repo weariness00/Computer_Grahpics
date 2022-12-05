@@ -1,6 +1,6 @@
 #pragma once
-#include "Render.h"
-class Cube :public Object, public Mesh
+#include "Object.h"
+class Cube :public Object
 {
 public:
 	Cube();
@@ -8,14 +8,14 @@ public:
 
 public:
 	void Init();
-	void Update();
+	void Draw();
 
 private:
 	void MoveMent();
 
 public:
-	float zRotate;
-	vec3 worldSpeed;
-	vec3 worldRotateSpeed;
+
+
+private:
 };
 

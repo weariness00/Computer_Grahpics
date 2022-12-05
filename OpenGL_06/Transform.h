@@ -27,6 +27,4 @@ public:
 
 	vec3 worldPivot;
 	vec3 localPivot;
-
-	mat4 model;
 };
